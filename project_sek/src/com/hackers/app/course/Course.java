@@ -12,7 +12,16 @@ public class Course {
 	private String classSchedule;
 	private String classTeacher;
 	private String className;
-
+	
+	
+	@Override
+	
+	public String toString() {
+		return "강의번호 : "+ classNum
+				+"｜개설년월 : "+ classSchedule
+				+"｜ 선생님 : "+ classTeacher
+				+"｜ 강의명 : "+ className;
+	}
 
 
 	

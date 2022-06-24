@@ -34,7 +34,7 @@ public class CourseDAO extends DAO {
 	public void insert(Course course) {
 		try {
 			connect();
-			String sql = "INSERT INTO courses VALUES(hac_class_seq.nextVal,?,?,?";
+			String sql = "INSERT INTO courses VALUES(hac_class_seq.nextVal,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, course.getClassSchedule());
 			pstmt.setString(2, course.getClassTeacher());
@@ -55,12 +55,39 @@ public class CourseDAO extends DAO {
 		}
 	}
 	
+    //update - 강의명 업데이트
+	
+	public void updateInfo(Course course) {
+		try {
+			
+			connect();
+			String sql = "UPDATE courses SET class_name=? WHERE class_num=?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString (1,course.getClassName());
+			pstmt.setInt(2, course.getClassNum());
+			
+			int result = pstmt.executeUpdate();
+			if(result >0) {
+				System.out.println("강의명 수정이 완료되었습니다.");
+			} else {
+				System.out.println("정상적으로 수정되지 않았습니다.");
+			}
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				disconnect();
+			}
+	}
+	
+	
 	//delete (강의삭제)
 	
 	public void delete (int classNum) {
 		try { 
 			connect();
-			String sql = "DELETE FROM courses VALUES WHERE class_num = '"+classNum+"'";
+			String sql = "DELETE FROM courses WHERE class_num = '"+classNum+"'";
 			stmt = conn.createStatement();
 			int result = stmt.executeUpdate(sql);
 			
@@ -83,7 +110,7 @@ public class CourseDAO extends DAO {
 		
 		try {
 			connect();
-			String sql = "SELECT * FROM students ORDER BY 3";
+			String sql = "SELECT * FROM courses ORDER BY 3";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -119,10 +146,10 @@ public class CourseDAO extends DAO {
 			if(rs.next())  {
 				course = new Course();
 				
-				course.setClassNum(Integer.parseInt("class_num"));
+				course.setClassNum(rs.getInt("class_num"));
 				course.setClassSchedule(rs.getString("class_schedule"));
 				course.setClassTeacher(rs.getString("class_teacher"));
-				course.setClassName(rs.getString("clsss_name"));
+				course.setClassName(rs.getString("class_name"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

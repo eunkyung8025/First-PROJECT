@@ -32,14 +32,14 @@ public class StudentDAO extends DAO {
 	public void insert(Student student) {
 		try {
 			connect();
-			String sql = "INSERT INTO students VALUES(students_num_seq.nextval,?,?,?,?,?,0)";
+			String sql = "INSERT INTO students VALUES(students_num_seq.nextval,?,?,?,?,?)";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, student.getStudentName());
 			pstmt.setString(2, student.getStudentGender());
 			pstmt.setString(3, student.getStudentBirth());
 			pstmt.setString(4, student.getStudentAddress());
-			pstmt.setInt(5, student.getStudentPhone());
+			pstmt.setString(5, student.getStudentPhone());
 			
 			int result = pstmt.executeUpdate();
 			
@@ -61,12 +61,12 @@ public class StudentDAO extends DAO {
 		
 		try {
 			connect();
-			String sql = "UPDATE students SET student_address=?, student_phone=?"
+			String sql = "UPDATE students SET student_address='?', student_phone=?"
 					+ "WHERE student_name =?";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, student.getStudentAddress());
-			pstmt.setInt(2, student.getStudentPhone());
+			pstmt.setString(2, student.getStudentPhone());
 			pstmt.setString(3, student.getStudentName());
 			
 			int result = pstmt.executeUpdate();
@@ -119,12 +119,13 @@ public class StudentDAO extends DAO {
 			
 			if(rs.next()) {
 				student = new Student();
+				student.setStudentNum(rs.getInt("student_num"));
 				student.setStudentName(rs.getString("student_name"));
-				student.setStudentPhone(rs.getInt("student_phone"));
+				student.setStudentPhone(rs.getString("student_phone"));
 				student.setStudentGender(rs.getString("student_gender"));
 				student.setStudentBirth(rs.getString("student_birth"));
 				student.setStudentAddress(rs.getString("student_address"));
-				student.setClassNum(rs.getInt("class_num"));
+
 			}
 		
 		} catch (SQLException e) {
@@ -147,12 +148,13 @@ public class StudentDAO extends DAO {
 			rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				Student student = new Student();
+				
+				student.setStudentNum(rs.getInt("student_num"));
 				student.setStudentName(rs.getString("student_name"));
-				student.setStudentPhone(rs.getInt("student_phone"));
+				student.setStudentPhone(rs.getString("student_phone"));
 				student.setStudentGender(rs.getString("student_gender"));
 				student.setStudentBirth(rs.getString("student_birth"));
 				student.setStudentAddress(rs.getString("student_address"));
-				student.setClassNum(rs.getInt("class_num"));
 				
 				list.add(student);
 			}

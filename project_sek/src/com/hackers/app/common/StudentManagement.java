@@ -34,9 +34,7 @@ public class StudentManagement {
 			} else if(menuNo == 5) {
 				//5.단건조회
 				selectStudent();
-			} else if(menuNo == 6) {
-				//6.수강신청
- 			} else if(menuNo ==9) {
+			} else if(menuNo ==9) {
  				back();
  				//exit();
  				break;
@@ -51,10 +49,12 @@ public class StudentManagement {
 	
 	protected void menuPrint() {
 
-		System.out.println("********외 국 어 학 원 1 위********");
-		System.out.println("1.회원등록 2.회원수정 3.회원삭제    ");
-		System.out.println("4.전체조회 5.단건조회 6.수강신청 9.back");
-		System.out.println("*********H A C K E R S*********");	
+		System.out.println("---- HACKERS ACADEMIA ----");
+		System.out.println("------- MEMBERSHIP -------");
+		System.out.println();
+		System.out.println("1.회원등록 2.회원수정 3.회원삭제  ");
+		System.out.println("4.전체조회 5.단건조회 9.back");
+		System.out.println("--------------------------");	
 	}
 	
 	protected int menuSelect() {
@@ -91,14 +91,14 @@ public class StudentManagement {
 		Student student = new Student();
 		System.out.print("이름>");
 		student.setStudentName(sc.nextLine());
-		System.out.print("성별>");
+		System.out.print("성별(남/여)>");
 		student.setStudentGender(sc.nextLine());
-		System.out.print("생년월일>");
+		System.out.print("생년월일(YYMMDD)>");
 		student.setStudentBirth(sc.nextLine());
 		System.out.print("주소>");
 		student.setStudentAddress(sc.nextLine());
 		System.out.print("연락처>");
-		student.setStudentPhone(Integer.parseInt(sc.nextLine()));
+		student.setStudentPhone(sc.nextLine());
 
 		return student;
 	}
@@ -131,8 +131,8 @@ public class StudentManagement {
 		
 		System.out.print("기존>"+student.getStudentPhone());
 		System.out.print("수정(수정하지 않을 경우 -1입력) >");
-		int phoneNum = Integer.parseInt(sc.nextLine());
-		if(phoneNum >-1) {
+		String phoneNum = sc.nextLine();
+		if(!phoneNum.equals("-1")) {
 			student.setStudentPhone(phoneNum);
 		}
 		

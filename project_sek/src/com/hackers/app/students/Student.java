@@ -15,8 +15,7 @@ public class Student {
 	private String studentGender;
 	private String studentBirth;
 	private String studentAddress;
-	private int studentPhone;
-	private int classNum;
+	private String studentPhone;
 	
 	
 	
@@ -25,11 +24,11 @@ public class Student {
 	@Override
 	
 	public String toString() {
-		return "이름 : "+studentName
-				+ ", 성별 : "+studentGender
-			    + ", 생년월일 : "+studentBirth
-			    + ", 주소 : "+studentAddress
-			    + ", 수강이력 : "+classNum;
+		return "이름:"+studentName
+				+ ", 연락처:"+studentPhone
+				+ ", 성별:"+studentGender
+			    + ", 생년월일:"+studentBirth
+			    + ", 주소:"+studentAddress;
 	}
 	
 	

@@ -1,48 +1,71 @@
 package com.hackers.app.common;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.hackers.app.course.Course;
-import com.hackers.app.course.CourseDAO;
+import com.hackers.app.register.Regi;
+import com.hackers.app.register.RegiDAO;
+import com.hackers.app.students.Student;
 
-public class RegiManagement {
-	
+public class RegiManagement extends Management {
+
 	Scanner sc = new Scanner(System.in);
-	
-	protected CourseDAO cDAO = CourseDAO.getInstance();
-	
+
+	protected RegiDAO rDAO = RegiDAO.getInstance();
+
 	public RegiManagement() {
-		
+
 		while (true) {
+			menuPrint();
 			int menuNo = menuSelect();
-			
-			if(menuNo ==1) {
-				//1. 강의개설
-				regiClassInfo();
-			} else if(menuNo ==2) {
-				//2. 강의삭제 -강의번호 기준
-				deleteClassInfo();
-			} else if (menuNo ==3) {
-				//3.전체강의 조회
-				//selectAllCourse();
+
+			if (menuNo == 1) {
+				// 1.수강신청
+				
+				printAll();
+				registerClass();
+			} else if (menuNo == 2) {
+				// 2.수강취소
+				refundClass();
+			} else if (menuNo == 3) {
+				// 3.수강신청결과
+				showRegiInfo();
+			} else if (menuNo == 4) {
+				// 4.전체조회
+				showAllClassInfo();
 			} else if (menuNo == 9) {
 				back();
 				break;
 			} else {
 				showInputError();
 			}
-			
+
 		}
 	}
-
-	//1.강의개설 2.강의삭제 3.전체강의조회 
 	
-	protected void menuPrint() {
+	private void printAll() {
 		
-		System.out.println("==========HACKER TOEIC==========");
-		System.out.println("1.강의개설 2.강의삭제 3.강의조회 9.뒤로가기");
-		System.out.println("================================");
+		System.out.println("▼ ▼ ▼ 개설된 강의목록 ▼ ▼ ▼");
+		List <Course> list = cDAO.selectAll();
+		for(Course cr : list) {
+			System.out.println(cr);
+
+		}
+		
 	}
+
+	protected void menuPrint() {
+
+		System.out.println("---- HACKERS ACADEMIA ----");
+		System.out.println("------- RESTRATION -------");
+		System.out.println();
+		System.out.println("1.수강신청 2.수강취소 3.신청내역조회     ");
+		System.out.println("4.전체수강신청 내역조회 9.back");
+		System.out.println("--------------------------");	
+	}
+	
 	protected int menuSelect() {
 		int menuNo = 0;
 		try {
@@ -52,62 +75,125 @@ public class RegiManagement {
 		}
 		return menuNo;
 	}
+	
 	private void back () {
 		System.out.println("메인으로 돌아갑니다.");
 	}
+	
+	protected void exit() {
+		System.out.println("프로그램을 종료합니다.");
+	}
+	
 	protected void showInputError() {
 		System.out.println("메뉴에서 입력해주시기 바랍니다.");
 	}
-	
 
-    //1.강의개설
+	//1.수강신청
+		
+	private void registerClass() {
+		Regi regi = inputClassInfo();
 
-	public void regiClassInfo() {
-		Course course = inputAll();
-		cDAO.insert(course);
-	}
-	
-	public Course inputAll() {
-		Course course = new Course();
+		Student student = sDAO.selectOne(regi.getStudentName());
+		if(student==null) {
+			System.out.println("회원정보가 없습니다.");
+			return;
+		} 
 		
-		System.out.print("개설강의월>");
-		course.setClassSchedule(sc.nextLine());
-		System.out.print("선생님>");
-		course.setClassTeacher(sc.nextLine());
-		System.out.print("강의명>");
-		course.setClassName(sc.nextLine());
-		
-		return course;
-	}
-	
-	//2.강의삭제
-	
-	private void deleteClassInfo() {
-		int classNum = inputClassNum();
-		
-		Course course = cDAO.selectOne(classNum);
-		
+		Course course = cDAO.selectOne(regi.getClassNum());
 		if(course==null) {
-			System.out.println("등록된 강의가 아닙니다.");
+			System.out.println("개설된 강의가 아닙니다.");
+			return;
+		} 
+		
+		//이미 수강신청한 강의일 경우, "이미 신청한 강의입니다."
+		
+		List<Regi> list = rDAO.selectOne(regi.getStudentName(), regi.getClassNum());
+		
+		if(list.size()>0) {
+			System.out.println("이미 신청한 강의입니다.");
 			return;
 		}
-		cDAO.delete(classNum);
-
+		
+	
+		//회원정보, 강의 있음 -> 나머지 정보를 담아줄것
+		System.out.println(course.getClassName()+"를 신청하시겠습니까? (1:YES/2:NO)");
+		
+		if(Integer.parseInt(sc.nextLine())==2) {
+			return;
+		}
+		
+		regi.setStudentNum(student.getStudentNum());
+		regi.setClassSchedule(course.getClassSchedule());
+		regi.setClassName(course.getClassName());
+		
+		
+		rDAO.insert(regi);
+		
 	}
 	
-	private int inputClassNum() {
+	private Regi inputClassInfo() {
+		Regi regi = new Regi();
+		
+		System.out.println("이름>");
+		regi.setStudentName(sc.nextLine());
 		System.out.println("강의번호>");
-		return Integer.parseInt(sc.nextLine());
+		regi.setClassNum(Integer.parseInt(sc.nextLine()));
+		return regi;
+		
+	}
+
+	//2.수강취소
+	
+	private void refundClass() {
+			
+		Regi regi = inputClassInfo();
+
+		Student student = sDAO.selectOne(regi.getStudentName());
+		if(student==null) {
+			System.out.println("회원정보가 없습니다.");
+			return;
+		} 
+		
+		Course course = cDAO.selectOne(regi.getClassNum());
+		if(course==null) {
+			System.out.println("등록한 강의가 아닙니다.");
+			return;
+		} 
+		
+		rDAO.delete(course.getClassNum());
+		
 	}
 	
 	
-	//class_num NUMBER(10),
-	//class_schedule VARCHAR2(100),
-	//class_teacher VARCHAR2(100),
-	//class_name VARCHAR2(100)
+	
+	//3.신청내역조회
+
+	private void showRegiInfo() {
+		
+		System.out.print("이름>");
+		String studentName = sc.nextLine();
+		
+		List<Regi> list = rDAO.selectOne(studentName);
+		
+		if(list ==null)  {
+			System.out.println("등록한 강의가 없습니다.");
+			return;
+		} else {
+			for(Regi regi :list) {
+				System.out.println(regi);
+			}
+		}
+	}
+	
+
+	//4.전체수강신청 내역조회
+	
+	private void showAllClassInfo() {
+		List<Regi> list = rDAO.selectAll();
+		
+		for(Regi regi : list) {
+			System.out.println(regi);
+		}
+	}
+	
 }
-	
-
-
-	
-	
