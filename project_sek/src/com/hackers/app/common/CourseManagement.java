@@ -85,6 +85,11 @@ public class CourseManagement {
 		course.setClassTeacher(sc.nextLine());
 		System.out.print("강의명>");
 		course.setClassName(sc.nextLine());
+		System.out.println("수강인원>");
+		int num = Integer.parseInt(sc.nextLine());
+		course.setCapacity(num);
+		course.setOccupied(num);
+		
 		
 		return course;
 	}

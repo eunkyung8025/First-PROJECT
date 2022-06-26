@@ -22,13 +22,15 @@ public class RegiDAO extends DAO {
 	public void insert (Regi regi) {
 		try {
 			connect();
-			String sql = "INSERT INTO registrations VALUES (?,?,?,?,?,sysdate)";
+			String sql = "INSERT INTO registrations VALUES (?,?,?,?,?,sysdate,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, regi.getStudentNum());
 			pstmt.setString(2, regi.getStudentName());
 			pstmt.setInt(3, regi.getClassNum());
 			pstmt.setString(4, regi.getClassSchedule());
 			pstmt.setString(5, regi.getClassName());
+			pstmt.setInt(6, regi.getAccommodate());
+			pstmt.setInt(7, regi.getOccupy());
 
 			
 			int result = pstmt.executeUpdate();
@@ -86,6 +88,9 @@ public class RegiDAO extends DAO {
 				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setClassName(rs.getString("class_name"));
 				regi.setRegiDate(rs.getDate("regi_date"));
+				regi.setAccommodate(rs.getInt("accommodate"));
+				regi.setOccupy(rs.getInt("occupy"));
+				
 				
 				list.add(regi);
 			}
@@ -117,6 +122,9 @@ public class RegiDAO extends DAO {
 				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setClassName(rs.getString("class_name"));
 				regi.setRegiDate(rs.getDate("regi_date"));
+				regi.setAccommodate(rs.getInt("accommodate"));
+				regi.setOccupy(rs.getInt("occupy"));
+				
 				list.add(regi);
 			}
 		} catch (SQLException e) {
@@ -146,6 +154,9 @@ public class RegiDAO extends DAO {
 				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setClassName(rs.getString("class_name"));
 				regi.setRegiDate(rs.getDate("regi_date"));
+				regi.setAccommodate(rs.getInt("accommodate"));
+				regi.setOccupy(rs.getInt("occupy"));
+				
 				list.add(regi);
 			}
 		} catch (SQLException e) {

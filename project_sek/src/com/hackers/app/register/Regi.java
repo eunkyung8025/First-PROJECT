@@ -14,7 +14,8 @@ public class Regi {
 	private String classSchedule; //신청년월
 	private String className; //강의명
 	private Date regiDate; //등록일
-	
+	private int capacity; //수용가능인원
+	private int occupied; //수강인원
 	
 	
 	@Override

@@ -46,12 +46,15 @@ public class RegiManagement extends Management {
 	}
 	
 	private void printAll() {
+		String str = "마감임박";
 		
 		System.out.println("▼ ▼ ▼ 개설된 강의목록 ▼ ▼ ▼");
 		List <Course> list = cDAO.selectAll();
 		for(Course cr : list) {
+			if(course.getOccupy()>course.getAccommodate()*0.9) {
+				System.out.print(str);
+			}
 			System.out.println(cr);
-
 		}
 		
 	}
@@ -114,6 +117,12 @@ public class RegiManagement extends Management {
 			return;
 		}
 		
+		//수강인원에 넘치지 않는 지 조회
+		
+		if(course.getOccupy() >= course.getCapacity()) {
+			System.out.println("마감된 강의입니다.");
+			return;
+		}
 	
 		//회원정보, 강의 있음 -> 나머지 정보를 담아줄것
 		System.out.println(course.getClassName()+"를 신청하시겠습니까? (1:YES/2:NO)");
@@ -125,6 +134,13 @@ public class RegiManagement extends Management {
 		regi.setStudentNum(student.getStudentNum());
 		regi.setClassSchedule(course.getClassSchedule());
 		regi.setClassName(course.getClassName());
+		
+		//수강하고 있는 인원을 데려와서 +1을 해줌
+		int num = course.getOccupy()+1;
+		course.setOccupy(num);
+		cDAO.updateOccupy(course);
+		regi.setAccommodate(course.getCapacity());
+		regi.setOccupy(num);
 		
 		
 		rDAO.insert(regi);
@@ -160,6 +176,11 @@ public class RegiManagement extends Management {
 			return;
 		} 
 		
+		//수강하고 있는 인원을 데려와서 -1을 해줌
+		int num = course.getOccupy()-1;
+		course.setOccupy(num);
+		cDAO.updateOccupy(course);
+				
 		rDAO.delete(course.getClassNum());
 		
 	}

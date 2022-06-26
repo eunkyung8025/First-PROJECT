@@ -34,11 +34,13 @@ public class CourseDAO extends DAO {
 	public void insert(Course course) {
 		try {
 			connect();
-			String sql = "INSERT INTO courses VALUES(hac_class_seq.nextVal,?,?,?)";
+			String sql = "INSERT INTO courses VALUES(hac_class_seq.nextVal,?,?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, course.getClassSchedule());
 			pstmt.setString(2, course.getClassTeacher());
 			pstmt.setString(3, course.getClassName());
+			pstmt.setInt(4, course.getCapacity());
+			pstmt.setInt(5, course.getOccupied());
 			
 			int result = pstmt.executeUpdate();
 			if(result >0) {
@@ -119,6 +121,8 @@ public class CourseDAO extends DAO {
 				course.setClassSchedule(rs.getString("class_schedule"));
 				course.setClassTeacher(rs.getString("class_teacher"));
 				course.setClassName(rs.getString("class_name"));
+				course.setCapacity(rs.getInt("accommodate"));
+				course.setOccupied(rs.getInt("occupy"));
 
 				list.add(course);
 			}
@@ -150,6 +154,8 @@ public class CourseDAO extends DAO {
 				course.setClassSchedule(rs.getString("class_schedule"));
 				course.setClassTeacher(rs.getString("class_teacher"));
 				course.setClassName(rs.getString("class_name"));
+				course.setCapacity(rs.getInt("accommodate"));
+				course.setOccupied(rs.getInt("occupy"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -159,6 +165,29 @@ public class CourseDAO extends DAO {
 		return course;
 	}
 	
+	//현재인원을 업데이트 해주는 기능
+	
+	public void updateOccupy (Course course) {
+		
+		try {
+			connect();
+			String sql = "UPDATE courses SET occupy = ? WHERE course_num=?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, course.getOccupy());
+			pstmt.setInt(2, course.getClassNum());
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+					
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		
+		
+	}
 	
 }
 
