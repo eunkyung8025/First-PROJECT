@@ -29,8 +29,8 @@ public class RegiDAO extends DAO {
 			pstmt.setInt(3, regi.getClassNum());
 			pstmt.setString(4, regi.getClassSchedule());
 			pstmt.setString(5, regi.getClassName());
-			pstmt.setInt(6, regi.getAccommodate());
-			pstmt.setInt(7, regi.getOccupy());
+			pstmt.setInt(6, regi.getCapacity());
+			pstmt.setInt(7, regi.getOccupied());
 
 			
 			int result = pstmt.executeUpdate();
@@ -88,8 +88,8 @@ public class RegiDAO extends DAO {
 				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setClassName(rs.getString("class_name"));
 				regi.setRegiDate(rs.getDate("regi_date"));
-				regi.setAccommodate(rs.getInt("accommodate"));
-				regi.setOccupy(rs.getInt("occupy"));
+				regi.setCapacity(rs.getInt("capacity"));
+				regi.setOccupied(rs.getInt("occupied"));
 				
 				
 				list.add(regi);
@@ -122,8 +122,8 @@ public class RegiDAO extends DAO {
 				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setClassName(rs.getString("class_name"));
 				regi.setRegiDate(rs.getDate("regi_date"));
-				regi.setAccommodate(rs.getInt("accommodate"));
-				regi.setOccupy(rs.getInt("occupy"));
+				regi.setCapacity(rs.getInt("capacity"));
+				regi.setOccupied(rs.getInt("occupied"));
 				
 				list.add(regi);
 			}
@@ -154,8 +154,8 @@ public class RegiDAO extends DAO {
 				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setClassName(rs.getString("class_name"));
 				regi.setRegiDate(rs.getDate("regi_date"));
-				regi.setAccommodate(rs.getInt("accommodate"));
-				regi.setOccupy(rs.getInt("occupy"));
+				regi.setCapacity(rs.getInt("capacity"));
+				regi.setOccupied(rs.getInt("occupied"));
 				
 				list.add(regi);
 			}

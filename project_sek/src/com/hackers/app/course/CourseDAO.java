@@ -121,8 +121,8 @@ public class CourseDAO extends DAO {
 				course.setClassSchedule(rs.getString("class_schedule"));
 				course.setClassTeacher(rs.getString("class_teacher"));
 				course.setClassName(rs.getString("class_name"));
-				course.setCapacity(rs.getInt("accommodate"));
-				course.setOccupied(rs.getInt("occupy"));
+				course.setCapacity(rs.getInt("capacity"));
+				course.setOccupied(rs.getInt("occupied"));
 
 				list.add(course);
 			}
@@ -154,8 +154,8 @@ public class CourseDAO extends DAO {
 				course.setClassSchedule(rs.getString("class_schedule"));
 				course.setClassTeacher(rs.getString("class_teacher"));
 				course.setClassName(rs.getString("class_name"));
-				course.setCapacity(rs.getInt("accommodate"));
-				course.setOccupied(rs.getInt("occupy"));
+				course.setCapacity(rs.getInt("capacity"));
+				course.setOccupied(rs.getInt("occupied"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -171,9 +171,9 @@ public class CourseDAO extends DAO {
 		
 		try {
 			connect();
-			String sql = "UPDATE courses SET occupy = ? WHERE course_num=?";
+			String sql = "UPDATE courses SET occupied = ? WHERE class_num=?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, course.getOccupy());
+			pstmt.setInt(1, course.getOccupied());
 			pstmt.setInt(2, course.getClassNum());
 			
 			rs = pstmt.executeQuery();

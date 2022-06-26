@@ -1,11 +1,7 @@
 package com.hackers.app.register;
 
 import java.sql.Date;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
 public class Regi {
 
 	private int studentNum; //수강생번호
@@ -27,5 +23,89 @@ public class Regi {
 				+ ", 신청일 : "+regiDate;
 		return result;
 	}
+
+
+	public int getStudentNum() {
+		return studentNum;
+	}
+
+
+	public void setStudentNum(int studentNum) {
+		this.studentNum = studentNum;
+	}
+
+
+	public String getStudentName() {
+		return studentName;
+	}
+
+
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
+
+
+	public int getClassNum() {
+		return classNum;
+	}
+
+
+	public void setClassNum(int classNum) {
+		this.classNum = classNum;
+	}
+
+
+	public String getClassSchedule() {
+		return classSchedule;
+	}
+
+
+	public void setClassSchedule(String classSchedule) {
+		this.classSchedule = classSchedule;
+	}
+
+
+	public String getClassName() {
+		return className;
+	}
+
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+
+	public Date getRegiDate() {
+		return regiDate;
+	}
+
+
+	public void setRegiDate(Date regiDate) {
+		this.regiDate = regiDate;
+	}
+
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+
+	public int getOccupied() {
+		return occupied;
+	}
+
+
+	public void setOccupied(int occupied) {
+		this.occupied = occupied;
+	}
+	
+	
+	
+	
 	
 }

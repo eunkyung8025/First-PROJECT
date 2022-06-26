@@ -88,7 +88,7 @@ public class CourseManagement {
 		System.out.println("수강인원>");
 		int num = Integer.parseInt(sc.nextLine());
 		course.setCapacity(num);
-		course.setOccupied(num);
+		course.setOccupied(0);
 		
 		
 		return course;

@@ -23,7 +23,7 @@ public class RegiManagement extends Management {
 
 			if (menuNo == 1) {
 				// 1.수강신청
-				
+
 				printAll();
 				registerClass();
 			} else if (menuNo == 2) {
@@ -44,19 +44,36 @@ public class RegiManagement extends Management {
 
 		}
 	}
-	
+
 	private void printAll() {
-		String str = "마감임박";
-		
+		String str = "★★마감임박★★ ";
+
 		System.out.println("▼ ▼ ▼ 개설된 강의목록 ▼ ▼ ▼");
-		List <Course> list = cDAO.selectAll();
-		for(Course cr : list) {
-			if(course.getOccupy()>course.getAccommodate()*0.9) {
+		List<Course> list = cDAO.selectAll();
+		for (Course cr : list) {
+
+			if (cr.getOccupied() == cr.getCapacity()) {
+				System.out.print("☆☆강의마감☆☆ ");
+				System.out.println(printInfo(cr));
+			} else if (cr.getOccupied() >= cr.getCapacity() * 0.7) {
 				System.out.print(str);
+				System.out.println(printInfo(cr));
+			} else {
+				System.out.println(printInfo(cr));
+
 			}
-			System.out.println(cr);
+
 		}
-		
+
+	}
+
+	// 수강신청 화면에서만 보이는 강의목록
+	private String printInfo(Course course) {
+
+		String str = "강의번호 : " + course.getClassNum() + "｜개설년월 : " + course.getClassSchedule() + "｜선생님 : "
+				+ course.getClassTeacher() + "｜강의명 : " + course.getClassName();
+
+		return str;
 	}
 
 	protected void menuPrint() {
@@ -66,9 +83,9 @@ public class RegiManagement extends Management {
 		System.out.println();
 		System.out.println("1.수강신청 2.수강취소 3.신청내역조회     ");
 		System.out.println("4.전체수강신청 내역조회 9.back");
-		System.out.println("--------------------------");	
+		System.out.println("--------------------------");
 	}
-	
+
 	protected int menuSelect() {
 		int menuNo = 0;
 		try {
@@ -78,143 +95,139 @@ public class RegiManagement extends Management {
 		}
 		return menuNo;
 	}
-	
-	private void back () {
+
+	private void back() {
 		System.out.println("메인으로 돌아갑니다.");
 	}
-	
+
 	protected void exit() {
 		System.out.println("프로그램을 종료합니다.");
 	}
-	
+
 	protected void showInputError() {
 		System.out.println("메뉴에서 입력해주시기 바랍니다.");
 	}
 
-	//1.수강신청
-		
+	// 1.수강신청
+
 	private void registerClass() {
 		Regi regi = inputClassInfo();
 
 		Student student = sDAO.selectOne(regi.getStudentName());
-		if(student==null) {
+		if (student == null) {
 			System.out.println("회원정보가 없습니다.");
 			return;
-		} 
-		
+		}
+
 		Course course = cDAO.selectOne(regi.getClassNum());
-		if(course==null) {
+		if (course == null) {
 			System.out.println("개설된 강의가 아닙니다.");
 			return;
-		} 
-		
-		//이미 수강신청한 강의일 경우, "이미 신청한 강의입니다."
-		
+		}
+
+		// 이미 수강신청한 강의일 경우, "이미 신청한 강의입니다."
+
 		List<Regi> list = rDAO.selectOne(regi.getStudentName(), regi.getClassNum());
-		
-		if(list.size()>0) {
+
+		if (list.size() > 0) {
 			System.out.println("이미 신청한 강의입니다.");
 			return;
 		}
-		
-		//수강인원에 넘치지 않는 지 조회
-		
-		if(course.getOccupy() >= course.getCapacity()) {
+
+		// 수강인원에 넘치지 않는 지 조회
+
+		if (course.getOccupied() >= course.getCapacity()) {
 			System.out.println("마감된 강의입니다.");
 			return;
 		}
-	
-		//회원정보, 강의 있음 -> 나머지 정보를 담아줄것
-		System.out.println(course.getClassName()+"를 신청하시겠습니까? (1:YES/2:NO)");
-		
-		if(Integer.parseInt(sc.nextLine())==2) {
+
+		// 회원정보, 강의 있음 -> 나머지 정보를 담아줄것
+		System.out.println(course.getClassName() + "를 신청하시겠습니까? (1:YES/2:NO)");
+
+		if (Integer.parseInt(sc.nextLine()) == 2) {
 			return;
 		}
-		
+
 		regi.setStudentNum(student.getStudentNum());
 		regi.setClassSchedule(course.getClassSchedule());
 		regi.setClassName(course.getClassName());
-		
-		//수강하고 있는 인원을 데려와서 +1을 해줌
-		int num = course.getOccupy()+1;
-		course.setOccupy(num);
+
+		// 수강하고 있는 인원을 데려와서 +1을 해줌
+		int num = course.getOccupied() + 1;
+		course.setOccupied(num);
 		cDAO.updateOccupy(course);
-		regi.setAccommodate(course.getCapacity());
-		regi.setOccupy(num);
-		
-		
+		regi.setCapacity(course.getCapacity());
+		regi.setOccupied(num);
+
 		rDAO.insert(regi);
-		
+
 	}
-	
+
 	private Regi inputClassInfo() {
 		Regi regi = new Regi();
-		
+
 		System.out.println("이름>");
 		regi.setStudentName(sc.nextLine());
 		System.out.println("강의번호>");
 		regi.setClassNum(Integer.parseInt(sc.nextLine()));
 		return regi;
-		
+
 	}
 
-	//2.수강취소
-	
+	// 2.수강취소
+
 	private void refundClass() {
-			
+
 		Regi regi = inputClassInfo();
 
 		Student student = sDAO.selectOne(regi.getStudentName());
-		if(student==null) {
+		if (student == null) {
 			System.out.println("회원정보가 없습니다.");
 			return;
-		} 
-		
+		}
+
 		Course course = cDAO.selectOne(regi.getClassNum());
-		if(course==null) {
+		if (course == null) {
 			System.out.println("등록한 강의가 아닙니다.");
 			return;
-		} 
-		
-		//수강하고 있는 인원을 데려와서 -1을 해줌
-		int num = course.getOccupy()-1;
-		course.setOccupy(num);
+		}
+
+		// 수강하고 있는 인원을 데려와서 -1을 해줌
+		int num = course.getOccupied() - 1;
+		course.setOccupied(num);
 		cDAO.updateOccupy(course);
-				
+
 		rDAO.delete(course.getClassNum());
-		
+
 	}
-	
-	
-	
-	//3.신청내역조회
+
+	// 3.신청내역조회
 
 	private void showRegiInfo() {
-		
+
 		System.out.print("이름>");
 		String studentName = sc.nextLine();
-		
+
 		List<Regi> list = rDAO.selectOne(studentName);
-		
-		if(list ==null)  {
+
+		if (list == null) {
 			System.out.println("등록한 강의가 없습니다.");
 			return;
 		} else {
-			for(Regi regi :list) {
+			for (Regi regi : list) {
 				System.out.println(regi);
 			}
 		}
 	}
-	
 
-	//4.전체수강신청 내역조회
-	
+	// 4.전체수강신청 내역조회
+
 	private void showAllClassInfo() {
 		List<Regi> list = rDAO.selectAll();
-		
-		for(Regi regi : list) {
+
+		for (Regi regi : list) {
 			System.out.println(regi);
 		}
 	}
-	
+
 }

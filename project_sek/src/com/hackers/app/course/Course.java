@@ -1,10 +1,5 @@
 package com.hackers.app.course;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class Course {
 
 	
@@ -27,6 +22,67 @@ public class Course {
 				+"｜ 현재인원 : "+ occupied;
 	}
 
+
+	public int getClassNum() {
+		return classNum;
+	}
+
+
+	public void setClassNum(int classNum) {
+		this.classNum = classNum;
+	}
+
+
+	public String getClassSchedule() {
+		return classSchedule;
+	}
+
+
+	public void setClassSchedule(String classSchedule) {
+		this.classSchedule = classSchedule;
+	}
+
+
+	public String getClassTeacher() {
+		return classTeacher;
+	}
+
+
+	public void setClassTeacher(String classTeacher) {
+		this.classTeacher = classTeacher;
+	}
+
+
+	public String getClassName() {
+		return className;
+	}
+
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
+
+
+	public int getCapacity() {
+		return capacity;
+	}
+
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+
+	public int getOccupied() {
+		return occupied;
+	}
+
+
+	public void setOccupied(int occupied) {
+		this.occupied = occupied;
+	}
+
+	
 
 	
 }
