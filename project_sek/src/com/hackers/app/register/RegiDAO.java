@@ -22,13 +22,16 @@ public class RegiDAO extends DAO {
 	public void insert (Regi regi) {
 		try {
 			connect();
-			String sql = "INSERT INTO registrations VALUES (?,?,?,?,?,sysdate,?,?)";
+			String sql = "INSERT INTO registrations (member_id, student_name, class_num, "
+					+ "class_name, class_schedule, regi_date, capacity, occupied) VALUES "
+					+ " (?,?,?,?,?,sysdate,?,?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, regi.getStudentNum());
+			pstmt.setString(1, regi.getMemberId());
 			pstmt.setString(2, regi.getStudentName());
 			pstmt.setInt(3, regi.getClassNum());
-			pstmt.setString(4, regi.getClassSchedule());
-			pstmt.setString(5, regi.getClassName());
+			pstmt.setString(4, regi.getClassName());
+			pstmt.setString(5, regi.getClassSchedule());
+			
 			pstmt.setInt(6, regi.getCapacity());
 			pstmt.setInt(7, regi.getOccupied());
 
@@ -82,15 +85,14 @@ public class RegiDAO extends DAO {
 			while (rs.next()) {
 				Regi regi = new Regi();
 				
-				regi.setStudentNum(rs.getInt("student_num"));
+				regi.setMemberId(rs.getString("member_id"));
 				regi.setStudentName(rs.getString("student_name"));
 				regi.setClassNum(rs.getInt("class_num"));
-				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setClassName(rs.getString("class_name"));
+				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setRegiDate(rs.getDate("regi_date"));
 				regi.setCapacity(rs.getInt("capacity"));
 				regi.setOccupied(rs.getInt("occupied"));
-				
 				
 				list.add(regi);
 			}
@@ -116,11 +118,11 @@ public class RegiDAO extends DAO {
 			
 			while (rs.next()) {
 				Regi regi = new Regi();
-				regi.setStudentNum(rs.getInt("student_num"));
+				regi.setMemberId(rs.getString("member_id"));
 				regi.setStudentName(rs.getString("student_name"));
 				regi.setClassNum(rs.getInt("class_num"));
-				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setClassName(rs.getString("class_name"));
+				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setRegiDate(rs.getDate("regi_date"));
 				regi.setCapacity(rs.getInt("capacity"));
 				regi.setOccupied(rs.getInt("occupied"));
@@ -148,11 +150,11 @@ public class RegiDAO extends DAO {
 			
 			while (rs.next()) {
 				Regi regi = new Regi();
-				regi.setStudentNum(rs.getInt("student_num"));
-				regi.setClassName(rs.getString("student_name"));
+				regi.setMemberId(rs.getString("member_id"));
+				regi.setStudentName(rs.getString("student_name"));
 				regi.setClassNum(rs.getInt("class_num"));
-				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setClassName(rs.getString("class_name"));
+				regi.setClassSchedule(rs.getString("class_schedule"));
 				regi.setRegiDate(rs.getDate("regi_date"));
 				regi.setCapacity(rs.getInt("capacity"));
 				regi.setOccupied(rs.getInt("occupied"));

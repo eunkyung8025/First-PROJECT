@@ -15,7 +15,9 @@ public class RegiManagement extends Management {
 
 	protected RegiDAO rDAO = RegiDAO.getInstance();
 
-	public RegiManagement() {
+	public RegiManagement() {}
+	
+	public void run() {
 
 		while (true) {
 			menuPrint();
@@ -44,8 +46,9 @@ public class RegiManagement extends Management {
 
 		}
 	}
+	
 
-	private void printAll() {
+	public void printAll() {
 		String str = "★★마감임박★★ ";
 
 		System.out.println("▼ ▼ ▼ 개설된 강의목록 ▼ ▼ ▼");
@@ -68,7 +71,7 @@ public class RegiManagement extends Management {
 	}
 
 	// 수강신청 화면에서만 보이는 강의목록
-	private String printInfo(Course course) {
+	public String printInfo(Course course) {
 
 		String str = "강의번호 : " + course.getClassNum() + "｜개설년월 : " + course.getClassSchedule() + "｜선생님 : "
 				+ course.getClassTeacher() + "｜강의명 : " + course.getClassName();
@@ -108,9 +111,9 @@ public class RegiManagement extends Management {
 		System.out.println("메뉴에서 입력해주시기 바랍니다.");
 	}
 
-	// 1.수강신청
+	// 1.수강신청 (관리자가 하는 수강신청)
 
-	private void registerClass() {
+	protected void registerClass() {
 		Regi regi = inputClassInfo();
 
 		Student student = sDAO.selectOne(regi.getStudentName());
@@ -147,8 +150,8 @@ public class RegiManagement extends Management {
 		if (Integer.parseInt(sc.nextLine()) == 2) {
 			return;
 		}
-
-		regi.setStudentNum(student.getStudentNum());
+		
+		regi.setMemberId(sDAO.selectOne(student.getStudentName()).getMemberId());
 		regi.setClassSchedule(course.getClassSchedule());
 		regi.setClassName(course.getClassName());
 
@@ -163,7 +166,7 @@ public class RegiManagement extends Management {
 
 	}
 
-	private Regi inputClassInfo() {
+	protected Regi inputClassInfo() {
 		Regi regi = new Regi();
 
 		System.out.println("이름>");

@@ -34,7 +34,8 @@ ALTER TABLE students
 Modify student_name VARCHAR2(100) NOT NULL;
 
 CREATE TABLE students (
-    student_num NUMBER PRIMARY KEY,
+	member_id VARCHAR2(100) PRIMARY KEY,
+    member_password VARCHAR2(100)
     student_name VARCHAR2(100) NOT NULL, 
     student_gender VARCHAR2(100) NOT NULL, 
     student_birth VARCHAR2(100) NOT NULL,             
@@ -43,7 +44,7 @@ CREATE TABLE students (
     );
     
 CREATE TABLE registrations (
-    student_num NUMBER,
+	member_id VARCHAR2(100),
     student_name VARCHAR2(100),
     class_num NUMBER,
     class_schedule VARCHAR2(100) NOT NULL, 
@@ -65,8 +66,8 @@ occupied NUMBER
 
  ALTER TABLE registrations
  ADD CONSTRAINT stu_fk_regi
- FOREIGN KEY (student_num)
- REFERENCES students (student_num);
+ FOREIGN KEY (member_id)
+ REFERENCES students (member_id);
  
  
   ALTER TABLE registrations

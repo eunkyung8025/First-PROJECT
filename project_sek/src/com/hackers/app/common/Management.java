@@ -3,6 +3,7 @@ package com.hackers.app.common;
 import java.util.Scanner;
 import com.hackers.app.course.CourseDAO;
 import com.hackers.app.students.StudentDAO;
+import com.hackers.app.common.LoginControl;
 
 public class Management {
 
@@ -21,11 +22,11 @@ public class Management {
 		int menuNo = menuSelect();
 		
 		if(menuNo==1) {
-			new StudentManagement();
+			new StudentManagement().run();
 		} else if(menuNo ==2) {
 			new CourseManagement();
 		} else if (menuNo ==3) {
-			new RegiManagement();
+			new RegiManagement().run();
 		} else if (menuNo ==9) {
 			exit();
 			break;
@@ -67,5 +68,7 @@ public class Management {
 	protected void showInputError() {
 		System.out.println("메뉴에서 입력해주시기 바랍니다.");
 	}
+	
+
 
 }

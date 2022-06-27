@@ -1,4 +1,4 @@
-package com.hackers.app.course;
+ package com.hackers.app.course;
 
 public class Course {
 

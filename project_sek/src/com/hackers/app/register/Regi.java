@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Regi {
 
-	private int studentNum; //수강생번호
+	private String memberId; //수강생번호
 	private String studentName; //수강생이름
 	private int classNum; //강의번호
 	private String classSchedule; //신청년월
@@ -18,20 +18,20 @@ public class Regi {
 	
 	public String toString() {
 		String result = "수강생이름 : "+studentName
-				+ ", 수강 월 : "+classSchedule
+				+ ", 신청년월 : "+classSchedule
 				+ ", 강의명 : "+className
 				+ ", 신청일 : "+regiDate;
 		return result;
 	}
 
 
-	public int getStudentNum() {
-		return studentNum;
+	public String getMemberId() {
+		return memberId;
 	}
 
 
-	public void setStudentNum(int studentNum) {
-		this.studentNum = studentNum;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
 
 
@@ -103,7 +103,8 @@ public class Regi {
 	public void setOccupied(int occupied) {
 		this.occupied = occupied;
 	}
-	
+
+
 	
 	
 	

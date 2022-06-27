@@ -6,6 +6,9 @@ import java.sql.Date; //년월일까지 나오는게 sql.date
 public class Student {
 	
 	private int studentNum;
+	private String memberId;
+	private String memberPassword;
+	private int memberRole;
 	private String studentName;
 	private String studentGender;
 	private String studentBirth;
@@ -19,7 +22,8 @@ public class Student {
 	@Override
 	
 	public String toString() {
-		return "이름:"+studentName
+		return "아이디:"+memberId
+				+ ", 이름:"+studentName
 				+ ", 연락처:"+studentPhone
 				+ ", 성별:"+studentGender
 			    + ", 생년월일:"+studentBirth
@@ -37,6 +41,42 @@ public class Student {
 
 	public void setStudentNum(int studentNum) {
 		this.studentNum = studentNum;
+	}
+
+
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+
+
+	public String getMemberPassword() {
+		return memberPassword;
+	}
+
+
+
+	public void setMemberPassword(String memberPassword) {
+		this.memberPassword = memberPassword;
+	}
+
+
+
+	public int getMemberRole() {
+		return memberRole;
+	}
+
+
+
+	public void setMemberRole(int memberRole) {
+		this.memberRole = memberRole;
 	}
 
 
@@ -98,7 +138,9 @@ public class Student {
 	public void setStudentPhone(String studentPhone) {
 		this.studentPhone = studentPhone;
 	}
-	
+
+
+
 	
 	
 }

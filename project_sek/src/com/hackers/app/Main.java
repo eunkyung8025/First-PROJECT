@@ -2,6 +2,7 @@ package com.hackers.app;
 
 import com.hackers.app.common.Management;
 import com.hackers.app.common.CourseManagement;
+import com.hackers.app.common.LoginControl;
 import com.hackers.app.common.StudentManagement;
 
 public class Main {
@@ -10,6 +11,8 @@ public class Main {
 
 		//new StudentManagement();
 		//new RegiManagement();
-		new Management().run();
+		//new Management().run();
+		
+		new LoginControl();
 	}
 }
