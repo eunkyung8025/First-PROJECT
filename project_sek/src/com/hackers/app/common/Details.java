@@ -35,7 +35,8 @@ Modify student_name VARCHAR2(100) NOT NULL;
 
 CREATE TABLE students (
 	member_id VARCHAR2(100) PRIMARY KEY,
-    member_password VARCHAR2(100)
+    member_password VARCHAR2(100),
+    member_role VARCHAR2(100),
     student_name VARCHAR2(100) NOT NULL, 
     student_gender VARCHAR2(100) NOT NULL, 
     student_birth VARCHAR2(100) NOT NULL,             
@@ -54,7 +55,7 @@ CREATE TABLE registrations (
     occupied NUMBER
 );
     
-CREATE TABLE courses(
+ CREATE TABLE courses(
 class_num NUMBER(10) PRIMARY KEY,
 class_schedule VARCHAR2(100),
 class_teacher VARCHAR2(100),
@@ -64,16 +65,17 @@ occupied NUMBER
 );
 
 
- ALTER TABLE registrations
+ALTER TABLE registrations
  ADD CONSTRAINT stu_fk_regi
  FOREIGN KEY (member_id)
  REFERENCES students (member_id);
  
  
-  ALTER TABLE registrations
+ALTER TABLE registrations
  ADD CONSTRAINT cou_fk_regi
  FOREIGN KEY (class_num)
  REFERENCES courses (class_num);
+drop table courses purge;
 
 DROP table students purge;
 
