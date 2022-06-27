@@ -38,7 +38,7 @@ public class UserModeManagement extends RegiManagement{
 			
 			} else if (menuNo==3) {
 				//3. 수강내역 조회
-		
+				showRegiInfo1();
 			} else if (menuNo ==9) {
 				//9. 뒤로가기
 				back();
@@ -51,11 +51,29 @@ public class UserModeManagement extends RegiManagement{
 	}
 	
 	protected void menuPrint() {
-
+		
+		System.out.println(" 1등에게 들어야 한 번에 끝낸다! " );
+		System.out.println("     외국어학원 1위 해커스    "  );
+		System.out.println(" @======================@ ");
+		System.out.println("       ||        ||        ");
+		System.out.println("       ||        ||        ");
+		System.out.println("       ||        ||        ");
+		System.out.println("       ||        ||        ");
+		System.out.println("       ||        ||        ");
+		System.out.println("       ||        ||        ");
 		System.out.println("--------------------------");
 		System.out.println("1.수강신청 2.회원정보 수정 ");
 		System.out.println("3.수강신청 내역조회 9.back");
 		System.out.println("--------------------------");
+		
+		System.out.println(" @======@ ");
+		System.out.println("         ⅰ ⅰ     ⅰ ⅰ     HACKERS  ");
+		System.out.println("         ⅰ ⅰ     ⅰ ⅰ     ACADEMIA  ");
+
+		System.out.println(" @======@ ");
+		System.out.println("   ∥  ∥   HACKERS");
+		System.out.println("   ∥  ∥   ACADEMIA");
+
 	}
 	
 	protected int menuSelect() {
@@ -94,6 +112,7 @@ public class UserModeManagement extends RegiManagement{
 	//1. 수강신청 
 	
 	protected void registerClass() {
+		
 		Student stu = LoginControl.getLoginInfo();
 		
 		Regi regi = new Regi();
@@ -152,7 +171,9 @@ public class UserModeManagement extends RegiManagement{
 	
 	protected void updateStudentInfo() {
 		
-		String  stuInfo = LoginControl.getLoginInfo().getMemberId();
+		String stuInfo = LoginControl.getLoginInfo().getMemberId();
+		
+		
 		Student stu = sDAO.selectId(stuInfo);
 		
 		System.out.print("기존 비밀번호 입력>");
@@ -185,4 +206,27 @@ public class UserModeManagement extends RegiManagement{
 		sDAO.updateInfo2(stu);
 		
 	}
+	
+	//3.수강신청 내역 조회
+	
+	protected void showRegiInfo1() {
+		
+		String stuInfo = LoginControl.getLoginInfo().getMemberId();
+		
+		Student stu = sDAO.selectId(stuInfo);
+		
+		List<Regi> list = rDAO.selectOne(stu.getStudentName());
+	
+		if(list ==null) {
+			System.out.println("등록한 강의가 없습니다.");
+			return;
+		} else {
+			for (Regi regi : list) {
+				System.out.println(regi);
+			}
+		}
+		
+	}
+
+
 }

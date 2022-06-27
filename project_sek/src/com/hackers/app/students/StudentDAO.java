@@ -43,7 +43,6 @@ public class StudentDAO extends DAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, student.getMemberId());
 			pstmt.setString(2, student.getMemberPassword());
-
 			pstmt.setString(3, student.getStudentName());
 			pstmt.setString(4, student.getStudentGender());
 			pstmt.setString(5, student.getStudentBirth());
@@ -53,7 +52,9 @@ public class StudentDAO extends DAO {
 			int result = pstmt.executeUpdate();
 
 			if (result > 0) {
-				System.out.println("회원정보 등록완료");
+				System.out.println("회원가입이 완료되었습니다.");
+				System.out.println();
+				
 			} else {
 				System.out.println("등록되지 않았습니다.");
 			}

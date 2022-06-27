@@ -11,7 +11,8 @@ public class StudentManagement {
 	Scanner sc = new Scanner(System.in);
 	protected StudentDAO sDAO = StudentDAO.getInstance();
 
-	public StudentManagement() {}
+	public StudentManagement() {
+	}
 
 	public void run() {
 		while (true) {
@@ -83,22 +84,43 @@ public class StudentManagement {
 	// 1.회원등록
 
 	public void regiStudentInfo() {
-		Student student = new Student();
 
-		System.out.print("아이디>");
+		Student student = null;
 
-		String id = sc.nextLine();
-		student = sDAO.selectId(id);
-		if (student != null) {
-			System.out.println("이미 사용중인 아이디입니다.");
-			return;
+		while (true) {
+			System.out.print("아이디> ");
+
+			String id = sc.nextLine();
+			student = sDAO.selectId(id);
+
+			if (student != null) {
+				System.out.println();
+				System.out.println("이미 사용중인 아이디입니다.");
+				System.out.println("새로운 아이디를 입력해주세요.");
+
+				System.out.println();
+
+			} else {
+
+				student = new Student();
+				student.setMemberId(id);
+				break;
+			}
 		}
 
-		student = new Student();
-		student.setMemberId(id);
-
-		System.out.print("비밀번호>");
+		System.out.print("비밀번호> ");
 		student.setMemberPassword(sc.nextLine());
+
+		// while (true) {
+		// System.out.print("비밀번호> ");
+		// student.setMemberPassword(sc.nextLine());
+		// System.out.println("비밀번호 재입력> ");
+		// String pwdCheck = sc.nextLine();
+		// if (!pwdCheck.equals(student.getMemberPassword())) {
+		// } else {
+		// break;
+		// }
+		// }
 
 		System.out.print("이름>");
 		student.setStudentName(sc.nextLine());
