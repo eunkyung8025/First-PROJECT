@@ -1,10 +1,7 @@
-package com.hackers.app.common;
+package com.hackers.app.course;
 
 import java.util.List;
 import java.util.Scanner;
-
-import com.hackers.app.course.Course;
-import com.hackers.app.course.CourseDAO;
 
 public class CourseManagement {
 	
@@ -144,11 +141,7 @@ public class CourseManagement {
 	}
 	
 	
-	//class_num NUMBER(10),
-	//class_schedule VARCHAR2(100),
-	//class_teacher VARCHAR2(100),
-	//class_name VARCHAR2(100)
-	
+		
 	private void selectAllCourse() {
 		List <Course> list = cDAO.selectAll();
 		

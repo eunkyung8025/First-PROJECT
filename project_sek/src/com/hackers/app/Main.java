@@ -1,9 +1,9 @@
 package com.hackers.app;
 
 import com.hackers.app.common.Management;
-import com.hackers.app.common.CourseManagement;
+import com.hackers.app.course.CourseManagement;
+import com.hackers.app.students.StudentManagement;
 import com.hackers.app.common.LoginControl;
-import com.hackers.app.common.StudentManagement;
 
 public class Main {
 

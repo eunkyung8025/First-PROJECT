@@ -1,10 +1,7 @@
-package com.hackers.app.common;
+package com.hackers.app.students;
 
 import java.util.List;
 import java.util.Scanner;
-
-import com.hackers.app.students.Student;
-import com.hackers.app.students.StudentDAO;
 
 public class StudentManagement {
 

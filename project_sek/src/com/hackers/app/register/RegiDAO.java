@@ -50,6 +50,40 @@ public class RegiDAO extends DAO {
 		}
 	}
 	
+	//등록 2 - 유저모드 
+	public void insert2 (Regi regi) {
+		try {
+			connect();
+			String sql = "INSERT INTO registrations (member_id, student_name, class_num, "
+					+ "class_name, class_schedule, regi_date, capacity, occupied) VALUES "
+					+ " (?,?,?,?,?,sysdate,?,?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, regi.getMemberId());
+			pstmt.setString(2, regi.getStudentName());
+			pstmt.setInt(3, regi.getClassNum());
+			pstmt.setString(4, regi.getClassName());
+			pstmt.setString(5, regi.getClassSchedule());
+			
+			pstmt.setInt(6, regi.getCapacity());
+			pstmt.setInt(7, regi.getOccupied());
+
+			
+			int result = pstmt.executeUpdate();
+			if(result >0) {
+				System.out.println("수강신청이 완료되었습니다.");
+				System.out.println(regi.getStudentName()+"님 1위 해커스와 최단기 목표달성!" );
+			} else {
+				System.out.println("정상적으로 등록되지 않았습니다.");
+			} 
+		
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+	
+	
 	//삭제
 	
 	public void delete (int classNum) {

@@ -45,6 +45,13 @@ capacity NUMBER,
 occupied NUMBER
 );
 
+CREATE TABLE notice(
+noti_num NUMBER PRIMARY KEY,
+noti_type NUMBER,
+noti_title VARCHAR2(1000),
+noti_content VARCHAR2(1000),
+);
+
 //2.외래키 설정
 
 ALTER TABLE registrations
@@ -59,6 +66,8 @@ ALTER TABLE registrations
  REFERENCES courses (class_num);
 drop table courses purge;
 
+
+
 //3. course 클래스 시퀀스 생성
 CREATE SEQUENCE hac_class_seq
 INCREMENT BY 11                    --10씩 증가..?
@@ -67,6 +76,15 @@ INCREMENT BY 11                    --10씩 증가..?
                 NOCACHE                     --NOCACHE는 기본값 20
                 NOCYCLE;  
                 
+                
+CREATE SEQUENCE hac_notice_seq
+INCREMENT BY 1 
+START WITH 1
+MAXVALUE 100
+NOCACHE 
+NOCYCLE;
+          
+                 
 //4. students > 관리자 아이디 생성
 insert into students values ('admin','admin',0,'관리자','여',000000,'NONE',0000000000);                
                 
@@ -85,6 +103,33 @@ Modify student_name VARCHAR2(100) NOT NULL;
 select constraint_name, constraint_type, search_condition
 from user_constraints
 where table_name ='REGISTRATIONS';
+
+	System.out.println(" 1등에게 들어야 한 번에 끝낸다! " );
+		System.out.println("     외국어학원 1위 해커스    "  );
+		System.out.println(" @======================@ ");
+		System.out.println("       ||        ||        ");
+		System.out.println("       ||        ||        ");
+		System.out.println("       ||        ||        ");
+		System.out.println("       ||        ||        ");
+		System.out.println("       ||        ||        ");
+		System.out.println("       ||        ||        ");
+		System.out.println("--------------------------");
+		System.out.println("1.수강신청 2.회원정보 수정 ");
+		System.out.println("3.수강신청 내역조회 9.back");
+		System.out.println("--------------------------");
+		
+		System.out.println(" @======@ ");
+		System.out.println("         ⅰ ⅰ     ⅰ ⅰ     HACKERS  ");
+		System.out.println("         ⅰ ⅰ     ⅰ ⅰ     ACADEMIA  ");
+
+		System.out.println(" @======@ ");
+		System.out.println(" @══════@ ");
+		System.out.println("   ║  ║  HACKERS");
+		System.out.println("   ║  ║   ACADEMIA");
+
+
+
+
 
 	 */
 

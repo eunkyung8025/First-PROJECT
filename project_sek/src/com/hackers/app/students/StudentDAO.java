@@ -110,8 +110,11 @@ public class StudentDAO extends DAO {
 			int result = pstmt.executeUpdate();
 			if (result > 0) {
 				System.out.println("회원정보 수정이 완료되었습니다.");
+				System.out.println();
 			} else {
 				System.out.println("정상적으로 수정되지 않았습니다.");
+				System.out.println();
+
 			}
 
 		} catch (SQLException e) {

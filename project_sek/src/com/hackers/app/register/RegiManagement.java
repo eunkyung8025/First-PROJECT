@@ -1,12 +1,11 @@
-package com.hackers.app.common;
+package com.hackers.app.register;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.hackers.app.common.Management;
 import com.hackers.app.course.Course;
-import com.hackers.app.register.Regi;
-import com.hackers.app.register.RegiDAO;
 import com.hackers.app.students.Student;
 
 public class RegiManagement extends Management {
@@ -49,14 +48,14 @@ public class RegiManagement extends Management {
 	
 
 	public void printAll() {
-		String str = "★★마감임박★★ ";
+		String str = "🚨마감임박🚨 ";
 
 		System.out.println("▼ ▼ ▼ 개설된 강의목록 ▼ ▼ ▼");
 		List<Course> list = cDAO.selectAll();
 		for (Course cr : list) {
 
 			if (cr.getOccupied() == cr.getCapacity()) {
-				System.out.print("☆☆강의마감☆☆ ");
+				System.out.print("⚡강의마감⚡ ");
 				System.out.println(printInfo(cr));
 			} else if (cr.getOccupied() >= cr.getCapacity() * 0.7) {
 				System.out.print(str);

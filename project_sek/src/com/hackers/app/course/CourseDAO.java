@@ -112,7 +112,7 @@ public class CourseDAO extends DAO {
 		
 		try {
 			connect();
-			String sql = "SELECT * FROM courses ORDER BY 3";
+			String sql = "SELECT * FROM courses ORDER BY 6";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while (rs.next()) {

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.hackers.app.students.Student;
 import com.hackers.app.students.StudentDAO;
+import com.hackers.app.students.StudentManagement;
 
 public class LoginControl {
 	
@@ -62,9 +63,20 @@ public class LoginControl {
 	}
 	
 	private void menuPrint() {
+	//	System.out.println("⠀⢠⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀");
+	//	System.out.println("⠀⠈⠿⠿⠟⢸⣿⣍⠉⢩⣿⣿⣿⣿⣯⠉⠉⣽⣿⡏⠻⠿⠟⠀");
+	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡄⠀⣿⣿⡇⠀⠀⠀");
+	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡄⠀⣿⣿⡇⠀⠀⠀");
+	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡄⠀⣿⣿⡇⠀⠀⠀");
+	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡇⠀⣿⣿⡇⠀⠀⠀");
+	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡇⠀⣿⣿⡇⠀⠀");
+	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⡟⠀⢸⣿⣿⣿⣿⣿⠀⠀⣿⣿⡇⠀⠀");
+		System.out.println(" ");
+		System.out.println("   HACKERS ACADEMIA ");
 		System.out.println("* * * * * * * * * * * *");
 		System.out.println("1.JOIN  2.LOGIN  3.EXIT");
 		System.out.println("* * * * * * * * * * * *");
+		System.out.print("SELECT MEMU > ");
 	}
 	
 	private void showInputError() {
@@ -86,9 +98,10 @@ public class LoginControl {
 	
 	private Student inputMember() {
 		Student info = new Student();
-		System.out.println("아이디>");
+		System.out.print("ID > ");
 		info.setMemberId(sc.nextLine());
-		System.out.println("비밀번호>");
+		System.out.print
+		("PASSWORD > ");
 		info.setMemberPassword(sc.nextLine());
 		
 		return info;
