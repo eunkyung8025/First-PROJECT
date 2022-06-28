@@ -127,7 +127,28 @@ where table_name ='REGISTRATIONS';
 		System.out.println("   ║  ║  HACKERS");
 		System.out.println("   ║  ║   ACADEMIA");
 
+update courses set occupied = 7 where class_num=10231; 
+update courses set occupied = 10 where class_num=10242; 
 
+commit;
+
+insert into students values ('stuid1','stuid1',1,'김민준','남',950415,'대구시 서구',01067814785);                
+insert into students values ('stuid2','stuid2',1,'박서준','남',930315,'대구시 달서구',01061574785);                
+insert into students values ('stuid3','stuid3',1,'이도윤','남',960401,'대구시 수성구',01013874785);                
+insert into students values ('stuid4','stuid4',1,'김예준','여',980105,'대구시 수성구',01068941385);                
+insert into students values ('stuid5','stuid5',1,'박하준','남',991205,'대구시 달서구',01048753654);                
+insert into students values ('stuid6','stuid6',1,'서주원','남',960107,'대구시 서구',01041150101);                
+insert into students values ('stuid7','stuid7',1,'김서연','여',990105,'서울시 서초구',01047840101);                
+insert into students values ('stuid8','stuid8',1,'최지우','여',990105,'서울시 서초구',01047840101);                
+insert into students values ('stuid9','stuid9',1,'윤서현','여',951109,'서울시 강서구',01047667401);                
+insert into students values ('stuid10','stuid10',1,'임하은','여',930101,'대구시 동구',01015787401);  
+insert into students values ('jimin','jimin',1,'홍지민','여',940121,'대구시 중구',01017451454);
+insert into students values ('jiyoo','jiyoo',1,'김지유','여',971005,'대구시 북구',01048711001);
+insert into students values ('hyunwoo','hyunwoo',1,'이현우','남',990201,'대구시 달서구',01015741001);
+insert into students values ('eunwoo','eunwoo',1,'배은우','남',960115,'대구시 달서구',0101110 1001);
+
+insert into courses values ( hac_class_seq.NextVal , '22.07' , '최석원' , '토익 550+ 입문 점수보장반 (14시)' , 10, 0);
+insert into courses values ( hac_class_seq.NextVal , '22.07' , '최석원' , '토익 750+ 정규 점수보장반 (16시)' , 10, 0);
 
 
 
