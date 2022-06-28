@@ -49,7 +49,7 @@ CREATE TABLE notice(
 noti_num NUMBER PRIMARY KEY,
 noti_type NUMBER,
 noti_title VARCHAR2(1000),
-noti_content VARCHAR2(1000),
+noti_content VARCHAR2(1000)
 );
 
 //2.외래키 설정

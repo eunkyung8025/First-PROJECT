@@ -18,6 +18,8 @@ public class Management {
 	protected CourseDAO cDAO = CourseDAO.getInstance();
 	protected NoticeDAO nDAO = NoticeDAO.getInstance();
 	
+	//이게 RUN이라서 계속 도는거 같은데..
+	
 	public void run() {
 		
 	 while (true) {
@@ -28,15 +30,19 @@ public class Management {
 		int menuNo = menuSelect();
 		
 		if(menuNo==1) {
+			//회원관리 매니지먼트
 			new StudentManagement().run();
 		} else if(menuNo ==2) {
+			//강의관리 매니지먼트
 			new CourseManagement();
 		} else if (menuNo ==3) {
+			//수강신청 매니지먼트
 			new RegiManagement().run();
 		} else if (menuNo ==4) {
+			//게시판 관리 매니지먼트
 			new NoticeManagement().run();
 		} else if (menuNo ==9) {
-			exit();
+			back();
 			break;
 		} else {
 			showInputError();
@@ -47,18 +53,22 @@ public class Management {
 
 	protected void menuPrint() {
 		System.out.println();
-		System.out.println("******** 외 국 어 학 원 1 위 ********");
+		System.out.println(" + H + A + C + K + E + R + S + ");
 		System.out.println();
-		System.out.println("1.학생정보관리 2.강의개설관리");
-		System.out.println("3.수강신청 4.공지관리     9.종료");
+		System.out.println("   1.STUDENT_ 회원정보관리");
+		System.out.println("   2.CLASS_ 강의개설,강의리스트조회 ");
+		System.out.println("   3.REGI_ 수강신청");
+		System.out.println("   4.NOTICE_ 공지글,반별게시판관리  ");
+		System.out.println("   9.LOG-OUT ");
 		System.out.println();
-		System.out.println("********* H A C K E R S *********");
+		System.out.println(" + + + T + O + E + I + C + + +  ");
 		System.out.println();
 
 	}
 
 	protected int menuSelect() {
-		System.out.println("메뉴선택>");
+		System.out.print("SELECT MEMU > ");
+
 
 		int menuNo = 0;
 
@@ -70,8 +80,13 @@ public class Management {
 		return menuNo;
 	}
 
-	protected void exit() {
-		System.out.println("프로그램을 종료합니다.");
+	protected void back() {
+		System.out.println("메인으로 돌아갑니다.");
+		System.out.println(" @══════@ ");
+		System.out.println("   ║  ║  HACKERS");
+		System.out.println("   ║  ║  ACADEMIA");
+		System.out.println();
+
 	}
 
 	protected void showInputError() {

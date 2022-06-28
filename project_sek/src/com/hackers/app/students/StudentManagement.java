@@ -1,12 +1,17 @@
 package com.hackers.app.students;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import com.hackers.app.register.Regi;
+import com.hackers.app.register.RegiDAO;
 
 public class StudentManagement {
 
 	Scanner sc = new Scanner(System.in);
 	protected StudentDAO sDAO = StudentDAO.getInstance();
+	protected RegiDAO rDAO = RegiDAO.getInstance();
 
 	public StudentManagement() {
 	}
@@ -171,23 +176,38 @@ public class StudentManagement {
 
 	private void deleteStudentInfo() {
 
+		
 		String studentName = inputName();
 
 		Student student = sDAO.selectOne(studentName);
-
+		
+		
+		//회원삭제 전 수강중일 경우 삭제가 불가하도록 안내
+		List <Regi> list = rDAO.selectOne(studentName);
+		
 		if (student == null) {
 			System.out.println("등록된 정보가 없습니다.");
 			return;
+		} 
+
+		if (list.size() > 0 ) {
+				System.out.println("수강 중인 강의가 있어 회원정보 삭제가 불가합니다.");
+				return;
+		} else {
+			sDAO.delete(studentName);
+			
 		}
-		sDAO.delete(studentName);
 
 	}
+	
 
 	private String inputName() {
 		System.out.println("회원이름>");
 		return sc.nextLine();
 	}
 
+	
+	
 	// 4.전체조회
 
 	private void selectAllStudent() {

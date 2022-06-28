@@ -58,24 +58,29 @@ public class LoginControl {
 
 	}
 	
-	private void exit() {
+	protected void exit() {
+		System.out.println();
 		System.out.println("프로그램을 종료합니다.");
+		System.out.println(" @══════@ ");
+		System.out.println("   ║  ║  HACKERS");
+		System.out.println("   ║  ║  ACADEMIA");
 	}
 	
 	private void menuPrint() {
-	//	System.out.println("⠀⢠⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀");
-	//	System.out.println("⠀⠈⠿⠿⠟⢸⣿⣍⠉⢩⣿⣿⣿⣿⣯⠉⠉⣽⣿⡏⠻⠿⠟⠀");
-	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡄⠀⣿⣿⡇⠀⠀⠀");
-	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡄⠀⣿⣿⡇⠀⠀⠀");
-	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡄⠀⣿⣿⡇⠀⠀⠀");
-	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡇⠀⣿⣿⡇⠀⠀⠀");
-	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡇⠀⣿⣿⡇⠀⠀");
-	//	System.out.println("⠀⠀⠀⠀⠀⢸⣿⡟⠀⢸⣿⣿⣿⣿⣿⠀⠀⣿⣿⡇⠀⠀");
+		System.out.println("⠀⢠⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀");
+		System.out.println("⠀⠈⠿⠿⠟⢸⣿⣍⠉⢩⣿⣿⣿⣿⣯⠉⠉⣽⣿⡏⠻⠿⠟⠀");
+		System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡄⠀⣿⣿⡇⠀⠀⠀");
+		System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡄⠀⣿⣿⡇⠀⠀⠀");
+		System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡄⠀⣿⣿⡇⠀⠀⠀");
+		System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡇⠀⣿⣿⡇⠀⠀⠀");
+		System.out.println("⠀⠀⠀⠀⠀⢸⣿⣿⠀⢸⣿⣿⣿⣿⣿⡇⠀⣿⣿⡇⠀⠀");
+		System.out.println("⠀⠀⠀⠀⠀⢸⣿⡟⠀⢸⣿⣿⣿⣿⣿⠀⠀⣿⣿⡇⠀⠀");
 		System.out.println(" ");
-		System.out.println("   HACKERS ACADEMIA ");
-		System.out.println("* * * * * * * * * * * *");
-		System.out.println("1.JOIN  2.LOGIN  3.EXIT");
-		System.out.println("* * * * * * * * * * * *");
+		System.out.println("     HACKERS ACADEMIA ");
+		System.out.println("     외국어학원 1위 해커스 " );
+		System.out.println(" * * * * * * * * * * * *");
+		System.out.println(" 1.JOIN  2.LOGIN  3.EXIT");
+		System.out.println(" * * * * * * * * * * * *");
 		System.out.print("SELECT MEMU > ");
 	}
 	
@@ -98,11 +103,14 @@ public class LoginControl {
 	
 	private Student inputMember() {
 		Student info = new Student();
+		System.out.println();
 		System.out.print("ID > ");
 		info.setMemberId(sc.nextLine());
 		System.out.print
 		("PASSWORD > ");
 		info.setMemberPassword(sc.nextLine());
+		System.out.println();
+
 		
 		return info;
 	}

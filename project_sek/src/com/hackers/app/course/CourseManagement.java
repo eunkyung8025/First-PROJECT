@@ -3,10 +3,14 @@ package com.hackers.app.course;
 import java.util.List;
 import java.util.Scanner;
 
+import com.hackers.app.register.Regi;
+import com.hackers.app.register.RegiDAO;
+
 public class CourseManagement {
 	
 	Scanner sc = new Scanner(System.in);
 	protected CourseDAO cDAO = CourseDAO.getInstance();
+	protected RegiDAO rDAO = RegiDAO.getInstance();
 	
 	public CourseManagement() {
 		
@@ -127,11 +131,19 @@ public class CourseManagement {
 		
 		Course course = cDAO.selectOne(classNum);
 		
+		List <Regi> list = rDAO.selectClassNum(classNum);
+		
 		if(course==null) {
 			System.out.println("등록된 강의가 아닙니다.");
 			return;
 		}
-		cDAO.delete(classNum);
+		//수강중이 있는 강의는 삭제 불가하도록 안내
+		if(list.size() > 0) {
+			System.out.println("수강신청한 학생이 있어 강의삭제가 불가합니다.");
+			System.out.println();
+		} else {
+			cDAO.delete(classNum);
+		}
 
 	}
 	
@@ -140,8 +152,6 @@ public class CourseManagement {
 		return Integer.parseInt(sc.nextLine());
 	}
 	
-	
-		
 	private void selectAllCourse() {
 		List <Course> list = cDAO.selectAll();
 		

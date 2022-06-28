@@ -17,7 +17,7 @@ public class RegiDAO extends DAO {
 		return rDAO;
 	}
 	
-	//등록 
+	//등록 1 - 관리자모드
 	
 	public void insert (Regi regi) {
 		try {
@@ -51,6 +51,7 @@ public class RegiDAO extends DAO {
 	}
 	
 	//등록 2 - 유저모드 
+	//수강 신청 완료 후 안내 문구를 구분하기 위해 별도의 메소드로 사용
 	public void insert2 (Regi regi) {
 		try {
 			connect();
@@ -94,7 +95,7 @@ public class RegiDAO extends DAO {
 			int result = stmt.executeUpdate(sql);
 			
 			if(result >0) {
-				System.out.println("수강취소가 완료되었습니다.");
+				System.out.println("수강 삭제가 완료되었습니다.");
 			} else {
 				System.out.println("정상적으로 취소되지 않았습니다.");
 			}
@@ -169,6 +170,40 @@ public class RegiDAO extends DAO {
 			disconnect();
 		} return list;
 	}
+	
+	//강의번호 조회
+	
+	public List <Regi> selectClassNum(int classNum) {
+		List<Regi> list = new ArrayList<> ();
+		try {
+			connect();
+			String sql = "SELECT * FROM registrations WHERE class_num = ?";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, classNum);
+
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				Regi regi = new Regi();
+				regi.setMemberId(rs.getString("member_id"));
+				regi.setStudentName(rs.getString("student_name"));
+				regi.setClassNum(rs.getInt("class_num"));
+				regi.setClassName(rs.getString("class_name"));
+				regi.setClassSchedule(rs.getString("class_schedule"));
+				regi.setRegiDate(rs.getDate("regi_date"));
+				regi.setCapacity(rs.getInt("capacity"));
+				regi.setOccupied(rs.getInt("occupied"));
+				
+				list.add(regi);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		} return list;
+	}
+	
 	
 	public List <Regi> selectOne(String studentName, int classNum) {
 		List<Regi> list = new ArrayList<> ();

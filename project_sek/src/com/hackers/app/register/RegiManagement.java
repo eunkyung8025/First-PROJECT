@@ -98,7 +98,7 @@ public class RegiManagement extends Management {
 		return menuNo;
 	}
 
-	private void back() {
+	protected void back() {
 		System.out.println("메인으로 돌아갑니다.");
 	}
 

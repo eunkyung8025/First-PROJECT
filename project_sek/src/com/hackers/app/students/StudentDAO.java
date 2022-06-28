@@ -25,14 +25,6 @@ public class StudentDAO extends DAO {
 
 	//////////////////// CRUD/////////////////////////
 
-	// studentNum/studentName/studentGender
-	// studentBirth/studentAddress/ studentPhone, classNum;
-	
-	//studentNum;	//memberId;  //memberPassword;
-	//memberRole;  //studentName //studentGender;
-	//studentBirth;//studentAddress;//studentPhone;
-	
-
 	// insert
 
 	public void insert(Student student) {
@@ -52,6 +44,7 @@ public class StudentDAO extends DAO {
 			int result = pstmt.executeUpdate();
 
 			if (result > 0) {
+				System.out.println();
 				System.out.println("회원가입이 완료되었습니다.");
 				System.out.println();
 				
@@ -125,10 +118,10 @@ public class StudentDAO extends DAO {
 	}
 
 	// delete -
-	public void delete(String memberId) {
+	public void delete(String memberName) {
 		try {
 			connect();
-			String sql = "DELETE FROM students WHERE member_id = '" + memberId + "'";
+			String sql = "DELETE FROM students WHERE student_name = '" + memberName + "'";
 			stmt = conn.createStatement();
 			int result = stmt.executeUpdate(sql);
 
@@ -280,5 +273,7 @@ public class StudentDAO extends DAO {
 		}
 		return loginInfo;
 	}
+	
+	
 
 }

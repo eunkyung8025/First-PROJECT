@@ -10,7 +10,7 @@ public class Notice {
 	@Override
 	
 	public String toString () {
-		return notiNum + "|" + notiTitle;
+		return " [" + notiNum + "] " + notiTitle;
 	}
 
 	public int getNotiNum() {

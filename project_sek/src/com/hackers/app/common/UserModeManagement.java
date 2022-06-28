@@ -1,5 +1,6 @@
 package com.hackers.app.common;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,6 +26,7 @@ public class UserModeManagement extends RegiManagement {
 	private Student stu;
 
 	// 수강신청 완료 여부에 따라 출력되는 메뉴를 다르게 설정하기 위해 생성자에서 해당 내용 선언
+
 	public UserModeManagement() {
 		stuInfo = LoginControl.getLoginInfo().getMemberId();
 		stu = sDAO.selectId(stuInfo);
@@ -35,6 +37,9 @@ public class UserModeManagement extends RegiManagement {
 		} else {
 			check = 0;
 		}
+
+		// notiType =0 이면 공지사항 1이면 반별게시판
+
 	}
 
 	public void run() {
@@ -64,7 +69,7 @@ public class UserModeManagement extends RegiManagement {
 				// 4. 공지사항
 				checkNoti();
 			} else if (menuNo == 5) {
-				// 5. 반별게시판
+				// 5. 반별게시
 				checkClassNoti();
 			} else if (menuNo == 9) {
 				// 9. 뒤로가기
@@ -122,6 +127,7 @@ public class UserModeManagement extends RegiManagement {
 		System.out.println("4.공지사항 5.반별게시판 9.log-out");
 		System.out.println("--------------------------");
 		System.out.print("SELECT MEMU > ");
+		System.out.println();
 
 	}
 
@@ -135,15 +141,22 @@ public class UserModeManagement extends RegiManagement {
 		return menuNo;
 	}
 
-	private void back() {
-		System.out.println("[" + stu.getStudentName() + "]님 오늘도 해커스와 함께 좋은 하루✿");
+	protected void back() {
+		System.out.println();
+		System.out.println("[" + stu.getStudentName() + "]님의 목표달성 그날까지!✿");
+		System.out.println("1위 해커스가 응원합니다. ");
+
+		System.out.println(" @══════@ ");
+		System.out.println("   ║  ║  HACKERS");
+		System.out.println("   ║  ║  ACADEMIA");
+	
 	}
 
 	protected void exit() {
 		System.out.println("프로그램을 종료합니다.");
 		System.out.println(" @══════@ ");
 		System.out.println("   ║  ║  HACKERS");
-		System.out.println("   ║  ║   ACADEMIA");
+		System.out.println("   ║  ║  ACADEMIA");
 	}
 
 	protected void showInputError() {
@@ -280,36 +293,81 @@ public class UserModeManagement extends RegiManagement {
 	// 공지사항만 보기
 
 	public void checkNoti() {
+
 		List<Notice> list = nDAO.selectBoardNoti();
 
+		List<Integer> plist = new ArrayList<>();
+
+		// 게시물 번호를 모으는 리스트를 만들어..
 		for (Notice notice : list) {
 			System.out.println(notice);
+			plist.add(notice.getNotiNum());
 		}
-		
-		System.out.println("확인하고자 하는 공지 번호를 입력하세요>");
-		int number = 0;
-		
-		number = Integer.parseInt(sc.nextLine());
-		
-		if(nDAO.selectOne(number)==null) {
-			System.out.println("공지글 번호를 다시 확인해주세요.");
+
+		System.out.println();
+		System.out.print("게시물번호 > ");
+		int number = (Integer.parseInt(sc.nextLine()));
+		Notice notice = nDAO.selectOne(number);
+
+		if (notice == null) {
+			System.out.println("");
+			System.out.println("게시글 번호를 다시 확인해주세요.");
+			System.out.println("");
 			return;
-		} 
-		
-		
-		
-		
-		
+
+		} else if (!plist.contains(number)) {
+			// 입력받은 값이 리스트 안에 있는지
+			System.out.println("게시글 번호를 다시 확인해주세요.");
+
+		} else {
+			System.out.println();
+			System.out.println("제목 : " + notice.getNotiTitle());
+			System.out.println("내용 : " + notice.getNotiContent());
+
+		}
+
 	}
 
 	// 반별게시판만 보기
 
 	public void checkClassNoti() {
-		List<Notice> list = nDAO.selectClassNoti();
 
-		for (Notice notice : list) {
+		if (check == 0) {
+			System.out.println("");
+			System.out.println("반별게시판은 수강생만 이용가능합니다.");
+			System.out.println("");
+			return;
+
+		} else {
+
+			List<Notice> list = nDAO.selectClassNoti();
+
+			List<Integer> plist = new ArrayList<>();
+			
+			for (Notice notice : list) {
+				System.out.println(notice);
+				plist.add(notice.getNotiNum());
+			}
+
+			System.out.print("게시물번호 > ");
+			int number = (Integer.parseInt(sc.nextLine()));
+			Notice notice = nDAO.selectOne(number);
+
 			System.out.println(notice);
+			if (notice == null) {
+				System.out.println("");
+				System.out.println("게시글 번호를 다시 확인해주세요.");
+				System.out.println("");
+				return;
+
+			} else if (!plist.contains(number)) {
+				// 입력받은 값이 리스트 안에 있는지
+				System.out.println("게시글 번호를 다시 확인해주세요.");
+
+			} else {
+				System.out.println("제목 : " + notice.getNotiTitle());
+				System.out.println("내용 : " + notice.getNotiContent());
+			}
 		}
 	}
-
 }

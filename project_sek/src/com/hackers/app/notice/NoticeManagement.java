@@ -18,12 +18,11 @@ public class NoticeManagement {
 	InputStream is = System.in;
 	Reader reader = new InputStreamReader(is);
 	BufferedReader br = new BufferedReader(reader);
-	
-	
+
 	public NoticeManagement() {
 	}
 
-	public void run(){
+	public void run() {
 
 		while (true) {
 			menuPrint();
@@ -55,16 +54,16 @@ public class NoticeManagement {
 
 	protected void menuPrint() {
 
-		System.out.println("---- HACKERS ACADEMIA ----");
-		System.out.println("------- NOTICE EDIT -------");
+		System.out.println();
+		System.out.println("------- NOTICE EDIT MODE -------");
 		System.out.println();
 		System.out.println("1.공지글 작성 2.공지글 수정 3.공지글 삭제     ");
-		System.out.println("4.공지글 관리   9.back          ");
-		System.out.println("--------------------------");
+		System.out.println("4.전체게시글 확인   9.back          ");
+		System.out.println("--------------------------------");
 	}
 
 	protected int menuSelect() {
-		System.out.print("메뉴선택>");
+		System.out.print("SELECT MEMU > ");
 		int menuNo = 0;
 		try {
 			menuNo = Integer.parseInt(sc.nextLine());
@@ -94,23 +93,22 @@ public class NoticeManagement {
 		System.out.print("게시글 제목 > ");
 		noti.setNotiTitle(sc.nextLine());
 
-		
 		System.out.println("게시글 내용 > ");
-		String str="";
+		String str = "";
 		while (true) {
-		String lineStr;
-		try {
-			lineStr = br.readLine();
-			if(lineStr.equals("q") || lineStr.equals("quit")) 
-				break;
+			String lineStr;
+			try {
+				lineStr = br.readLine();
+				if (lineStr.equals("q") || lineStr.equals("quit"))
+					break;
 //			noti.setNotiContent(sc.nextLine());
-			str= str+lineStr +"\n";
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				str = str + lineStr + "\n";
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		}
-		//System.out.println(str);
+		// System.out.println(str);
 		noti.setNotiContent(str);
 		nDAO.insert(noti);
 	}
@@ -172,21 +170,30 @@ public class NoticeManagement {
 	// 게시글 리스트 보기
 
 	public void selectAllNoti() {
+		
+		System.out.println();
 		List<Notice> list = nDAO.selectAll();
 
 		for (Notice not : list) {
 			System.out.println(not);
 		}
+		showContent();
+		
+
 	}
 
-	// 공지사항만 보기
+	// 유저 -> 공지사항만 보기
 
 	public void checkNoti() {
+		
 		List<Notice> list = nDAO.selectBoardNoti();
 
 		for (Notice notice : list) {
 			System.out.println(notice);
 		}
+		showContent();
+
+
 	}
 
 	// 반별게시판만 보기
@@ -197,23 +204,37 @@ public class NoticeManagement {
 		for (Notice notice : list) {
 			System.out.println(notice);
 		}
+		showContent();
 	}
-	
-	//게시물 내용 보기
-	
+
+	// 게시물 내용 보기
+
 	public void showContent() {
 		
-		Notice notii = new Notice();
-		System.out.println("게시물번호 > ");
-		notii.setNotiNum(Integer.parseInt(sc.nextLine()));
+		try {
+		System.out.println();
+		System.out.println("확인하고자 하는 게시물 번호를 입력하세요.");
+		System.out.println("ENTER > ");
+		int number = (Integer.parseInt(sc.nextLine()));
+		Notice notice = nDAO.selectOne(number);
 		
+		if(notice ==null) {
+			System.out.println("");
+			System.out.println("게시글 번호를 다시 확인해주세요.");
+			System.out.println("");
+			return;
+
+		} else {
+			System.out.println();
+			System.out.println("[제목] :"+notice.getNotiTitle());
+			System.out.println(notice.getNotiContent());
+			System.out.println();
+
+		}
 		
-		
-		
-	
+	} catch (NullPointerException e) {
+		e.printStackTrace();
 	}
 
-	
-	
-
+}
 }
