@@ -38,7 +38,6 @@ public class NoticeManagement {
 			} else if (menuNo == 3) {
 				// 3.게시글 삭제
 				deleteNoti();
-
 			} else if (menuNo == 4) {
 				// 4.게시글 보기
 				selectAllNoti();
@@ -55,11 +54,12 @@ public class NoticeManagement {
 	protected void menuPrint() {
 
 		System.out.println();
-		System.out.println("------- NOTICE EDIT MODE -------");
+		System.out.println("------- NOTICE MANAGEMENT -------");
 		System.out.println();
-		System.out.println("1.공지글 작성 2.공지글 수정 3.공지글 삭제     ");
-		System.out.println("4.전체게시글 확인   9.back          ");
-		System.out.println("--------------------------------");
+		System.out.println("   1.공지 작성 2.공지 수정 3.공지 삭제");
+		System.out.println("   4.전체 게시글 확인   9.back          ");
+		System.out.println();
+		System.out.println("---------------------------------");
 	}
 
 	protected int menuSelect() {
@@ -93,7 +93,9 @@ public class NoticeManagement {
 		System.out.print("게시글 제목 > ");
 		noti.setNotiTitle(sc.nextLine());
 
-		System.out.println("게시글 내용 > ");
+		//게시판 작성 시, 줄바꿈 처리도 활용할 수 있도록 q+enter 입력으로 저장되도록 반영
+		System.out.println("게시글 내용 (q+ENTER 입력 시 저장) >");
+
 		String str = "";
 		while (true) {
 			String lineStr;
@@ -101,14 +103,11 @@ public class NoticeManagement {
 				lineStr = br.readLine();
 				if (lineStr.equals("q") || lineStr.equals("quit"))
 					break;
-//			noti.setNotiContent(sc.nextLine());
 				str = str + lineStr + "\n";
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		// System.out.println(str);
 		noti.setNotiContent(str);
 		nDAO.insert(noti);
 	}
@@ -124,7 +123,6 @@ public class NoticeManagement {
 			System.out.println("게시글이 존재하지 않습니다.");
 			return;
 		}
-
 		notice = inputUpdateInfo(notice);
 		nDAO.update(notice);
 
@@ -134,22 +132,35 @@ public class NoticeManagement {
 		int notiNum = 0;
 		try {
 			System.out.println("게시글번호 > ");
-			notiNum = Integer.parseInt(sc.nextLine());
+			notiNum = menuSelect();
 
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
-
 		}
 		return notiNum;
 
 	}
 
 	public Notice inputUpdateInfo(Notice notice) {
-		System.out.println("기존>" + notice.getNotiContent());
+		System.out.println();
+		System.out.println("기존 > " + notice.getNotiContent());
 
-		System.out.println("수정할 내용 입력>");
-		String content = sc.nextLine();
-		notice.setNotiContent(content);
+		System.out.println("수정할 내용 입력해주세요. ");
+		System.out.println("(q+ENTER 입력 시 저장) >");
+	
+		String str = "";
+		while (true) {
+			String lineStr;
+			try {
+				lineStr = br.readLine();
+				if (lineStr.equals("q") || lineStr.equals("quit"))
+					break;
+				str = str + lineStr + "\n";
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		notice.setNotiContent(str);
 		return notice;
 	}
 
@@ -178,6 +189,12 @@ public class NoticeManagement {
 			System.out.println(not);
 		}
 		showContent();
+		
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 
 	}
@@ -215,7 +232,7 @@ public class NoticeManagement {
 		System.out.println();
 		System.out.println("확인하고자 하는 게시물 번호를 입력하세요.");
 		System.out.println("ENTER > ");
-		int number = (Integer.parseInt(sc.nextLine()));
+		int number =  menuSelect();
 		Notice notice = nDAO.selectOne(number);
 		
 		if(notice ==null) {
@@ -226,8 +243,8 @@ public class NoticeManagement {
 
 		} else {
 			System.out.println();
-			System.out.println("[제목] :"+notice.getNotiTitle());
-			System.out.println(notice.getNotiContent());
+			System.out.println("[제목] : " + notice.getNotiTitle());
+			System.out.println("[내용] :\n"+ notice.getNotiContent());
 			System.out.println();
 
 		}

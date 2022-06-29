@@ -22,13 +22,7 @@ public class CourseDAO extends DAO {
 		return courseDAO;
 	}
 
-	
-	//class_num NUMBER(10),
-	//class_schedule VARCHAR2(100),
-	//class_teacher VARCHAR2(100),
-	//class_name VARCHAR2(100)
-	
-	
+		
 	//insert (강의개설)
 	
 	public void insert(Course course) {
@@ -105,14 +99,14 @@ public class CourseDAO extends DAO {
  		}
 	}
 	
-	//강의 전체조회
+	//강의 전체조회 : 리스트에 담을 때 학사일정 별 노출 구분하기 위해 두 개의 메소드 활용 
 	
-	public List <Course> selectAll() {
+	public List <Course> selectAll1() {
 		List<Course> list = new ArrayList<> ();
 		
 		try {
 			connect();
-			String sql = "SELECT * FROM courses ORDER BY 6";
+			String sql = "SELECT * FROM courses WHERE class_schedule = '22.07' ORDER BY 4";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -133,6 +127,36 @@ public class CourseDAO extends DAO {
 		}
 		return list;
 	}
+	
+	//강의 전체조회 : 리스트에 담을 때 학사일정 별 노출 구분하기 위해 두 개의 메소드 활용 
+	
+		public List <Course> selectAll2() {
+			List<Course> list = new ArrayList<> ();
+			
+			try {
+				connect();
+				String sql = "SELECT * FROM courses WHERE class_schedule = '22.08' ORDER BY 4";
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					Course course = new Course();
+					course.setClassNum(rs.getInt("class_num"));
+					course.setClassSchedule(rs.getString("class_schedule"));
+					course.setClassTeacher(rs.getString("class_teacher"));
+					course.setClassName(rs.getString("class_name"));
+					course.setCapacity(rs.getInt("capacity"));
+					course.setOccupied(rs.getInt("occupied"));
+
+					list.add(course);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				disconnect();
+			}
+			return list;
+		}
+		
 	
 	//강의 단건조회
 	

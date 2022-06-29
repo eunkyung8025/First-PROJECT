@@ -45,15 +45,15 @@ public class CourseManagement {
 	
 	protected void menuPrint() {
 		
-		System.out.println("---- HACKERS ACADEMIA ----");
-		System.out.println("------- CLASS EDIT -------");
+		System.out.println("------- CLASS MANAGEMENT -------");
 		System.out.println();		
-		System.out.println("1.강의개설 2.전체강의조회              ");
-		System.out.println("3.강의수정 4.강의삭제 9.back          ");
-		System.out.println("--------------------------");	
+		System.out.println("   1.강의개설   2.전체강의조회              ");
+		System.out.println("   3.강의수정  4.강의삭제  9.back  ");
+		System.out.println();
+		System.out.println("---------------------------------");
 	}
+	
 	protected int menuSelect() {
-		System.out.print("메뉴선택>");
 		int menuNo = 0;
 		try {
 			menuNo = Integer.parseInt(sc.nextLine());
@@ -80,17 +80,16 @@ public class CourseManagement {
 	public Course inputAll() {
 		Course course = new Course();
 		
-		System.out.print("개설강의월(YY.MM)>");
+		System.out.print("개설강의월(YY.MM) > ");
 		course.setClassSchedule(sc.nextLine());
-		System.out.print("선생님>");
+		System.out.print("선생님 > ");
 		course.setClassTeacher(sc.nextLine());
-		System.out.print("강의명>");
+		System.out.print("강의명 > ");
 		course.setClassName(sc.nextLine());
-		System.out.println("수강인원>");
+		System.out.println("수강인원 > ");
 		int num = Integer.parseInt(sc.nextLine());
 		course.setCapacity(num);
 		course.setOccupied(0);
-		
 		
 		return course;
 	}
@@ -112,10 +111,12 @@ public class CourseManagement {
 		
 	}
 	
+	// 수정 - 강의명 수정 가능
+	
 	private Course inputUpdateInfo(Course course) {
 		
-		System.out.println("기존>"+course.getClassName());
-		System.out.println("수정>");
+		System.out.println("기존 > "+course.getClassName());
+		System.out.println("수정 > ");
 		String className = sc.nextLine();
 		course.setClassName(className);
 		
@@ -137,7 +138,8 @@ public class CourseManagement {
 			System.out.println("등록된 강의가 아닙니다.");
 			return;
 		}
-		//수강중이 있는 강의는 삭제 불가하도록 안내
+		
+		//수강중이 있는 강의는 삭제 불가하도록 안내문구 노출
 		if(list.size() > 0) {
 			System.out.println("수강신청한 학생이 있어 강의삭제가 불가합니다.");
 			System.out.println();
@@ -149,20 +151,30 @@ public class CourseManagement {
 	
 	private int inputClassNum() {
 		System.out.println("강의번호>");
-		return Integer.parseInt(sc.nextLine());
+		return  menuSelect();
 	}
 	
+	//강의 조회 -> for문으로 돌때 학사일정을 구분해서 보기 위해 두개의 메소드 활용
 	private void selectAllCourse() {
-		List <Course> list = cDAO.selectAll();
 		
-		for(Course cou : list) {
+		System.out.println();
+		List <Course> list1 = cDAO.selectAll1();
+		
+		for(Course cou : list1) {
 			System.out.println(cou);
 		}
 		
+		System.out.println();
+		List <Course> list2 = cDAO.selectAll2();
+		
+		for(Course cou : list2) {
+			System.out.println(cou);
+		}
+		
+		System.out.println();
+
 	}
+	
+	
 }
-	
 
-
-	
-	

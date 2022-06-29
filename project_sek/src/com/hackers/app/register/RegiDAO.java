@@ -107,13 +107,44 @@ public class RegiDAO extends DAO {
 		}
 	}
 	
-	//전체조회 
+	//전체조회 : 학사일정에 따른 출력문 수정 (selectAll 1: 22.07)
 	
-	public List <Regi> selectAll() {
+	public List <Regi> selectAll1() {
 		List<Regi> list = new ArrayList<> ();
 		try {
 			connect();
-			String sql = "SELECT * FROM registrations ORDER BY 1";
+			String sql = "SELECT * FROM registrations WHERE class_schedule = '22.07' ORDER BY 1";
+		    stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while (rs.next()) {
+				Regi regi = new Regi();
+				
+				regi.setMemberId(rs.getString("member_id"));
+				regi.setStudentName(rs.getString("student_name"));
+				regi.setClassNum(rs.getInt("class_num"));
+				regi.setClassName(rs.getString("class_name"));
+				regi.setClassSchedule(rs.getString("class_schedule"));
+				regi.setRegiDate(rs.getDate("regi_date"));
+				regi.setCapacity(rs.getInt("capacity"));
+				regi.setOccupied(rs.getInt("occupied"));
+				
+				list.add(regi);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		} return list;
+	}
+	
+	//전체조회 : 학사일정에 따른 출력문 수정 (selectAll 2: 22.08)
+	
+	public List <Regi> selectAll2() {
+		List<Regi> list = new ArrayList<> ();
+		try {
+			connect();
+			String sql = "SELECT * FROM registrations WHERE class_schedule = '22.08' ORDER BY 1";
 		    stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			

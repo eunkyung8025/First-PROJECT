@@ -1,8 +1,8 @@
 package com.hackers.app;
 
-import com.hackers.app.common.Management;
-import com.hackers.app.course.CourseManagement;
-import com.hackers.app.students.StudentManagement;
+import java.lang.reflect.Field;
+import java.nio.charset.Charset;
+
 import com.hackers.app.common.LoginControl;
 
 public class Main {
@@ -12,7 +12,7 @@ public class Main {
 		//new StudentManagement();
 		//new RegiManagement();
 		//new Management().run();
-		
 		new LoginControl();
+		
 	}
 }

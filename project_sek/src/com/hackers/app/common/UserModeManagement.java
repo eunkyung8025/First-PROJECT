@@ -61,7 +61,6 @@ public class UserModeManagement extends RegiManagement {
 			} else if (menuNo == 2) {
 				// 2. 회원정보 수정 (비밀번호, 주소)
 				updateStudentInfo();
-
 			} else if (menuNo == 3) {
 				// 3. 수강내역 조회
 				showRegiInfo1();
@@ -82,7 +81,52 @@ public class UserModeManagement extends RegiManagement {
 		}
 	}
 
-	// 수강신청하지 않은 신규유저에게 보이는 메뉴 내용
+	public void printAll() {
+		String str = "★ 마감임박 ★ "; // 🔔🔔
+		String ok = "ㅇ 수강신청 ㅇ "; // ✔️✔️
+
+		System.out.println();
+		System.out.println("♨ 해커스 인기강의 마감속출 ♨"); // 🚨🚨
+		System.out.println("   마감이 빠른 1위 해커스   ");
+		System.out.println();
+
+		List<Course> list1 = cDAO.selectAll1();
+
+		for (Course cr : list1) {
+
+			if (cr.getOccupied() == cr.getCapacity()) {
+				System.out.print("☆ 강의마감 ☆ "); //⚡⚡
+				System.out.println(printInfo(cr));
+			} else if (cr.getOccupied() >= cr.getCapacity() * 0.7) {
+				System.out.print(str);
+				System.out.println(printInfo(cr));
+			} else {
+				System.out.println(ok + printInfo(cr));
+
+			}
+
+		}
+		System.out.println();
+		List<Course> list2 = cDAO.selectAll2();
+
+		for (Course cr : list2) {
+
+			if (cr.getOccupied() == cr.getCapacity()) {
+				System.out.print("☆ 강의마감 ☆ ");
+				System.out.println(printInfo(cr));
+			} else if (cr.getOccupied() >= cr.getCapacity() * 0.7) {
+				System.out.print(str);
+				System.out.println(printInfo(cr));
+			} else {
+				System.out.println(ok + printInfo(cr));
+
+			}
+
+		}
+		System.out.println();
+	}
+
+	// 수강신청하지 않은 신규유저에게 보이는 메뉴 내용 → check = 0
 
 	protected void menuPrint() {
 
@@ -101,13 +145,12 @@ public class UserModeManagement extends RegiManagement {
 		System.out.println("1.인기강좌 수강신청 2.개인정보 수정 ");
 		System.out.println("3.수강신청 내역 조회           ");
 		System.out.println("4.공지사항 5.반별게시판 9.log-out");
-
 		System.out.println("--------------------------");
 		System.out.print("SELECT MEMU > ");
 
 	}
 
-	// 수강신청 완료한 사람에게 보이는 메뉴 내용
+	// 수강신청 완료한 사람에게 보이는 메뉴 내용 → check = 1
 
 	protected void menuPrint2() {
 
@@ -117,7 +160,8 @@ public class UserModeManagement extends RegiManagement {
 
 		System.out.println();
 
-		System.out.println("[" + stu.getStudentName() + "]님 오늘도 해커스와 함께 좋은 하루✿");
+		System.out.println("(●'◡'●)	");
+		System.out.println("[" + stu.getStudentName() + "]님 오늘도 해커스와 함께 좋은 하루!");
 		System.out.println("     HACKERS ACADEMIA  ");
 		System.out.println();
 		System.out.println("--------------------------");
@@ -127,7 +171,6 @@ public class UserModeManagement extends RegiManagement {
 		System.out.println("4.공지사항 5.반별게시판 9.log-out");
 		System.out.println("--------------------------");
 		System.out.print("SELECT MEMU > ");
-		System.out.println();
 
 	}
 
@@ -143,20 +186,15 @@ public class UserModeManagement extends RegiManagement {
 
 	protected void back() {
 		System.out.println();
-		System.out.println("[" + stu.getStudentName() + "]님의 목표달성 그날까지!✿");
+		System.out.println(" @══════@ ");
+		System.out.println("   ║  ║  HACKERS");
+		System.out.println("   ║  ║  ACADEMIA");
+		System.out.println();
+		System.out.println("[" + stu.getStudentName() + "]님의 목표달성 그날까지!");
 		System.out.println("1위 해커스가 응원합니다. ");
+		System.out.println();
+		System.out.println();
 
-		System.out.println(" @══════@ ");
-		System.out.println("   ║  ║  HACKERS");
-		System.out.println("   ║  ║  ACADEMIA");
-	
-	}
-
-	protected void exit() {
-		System.out.println("프로그램을 종료합니다.");
-		System.out.println(" @══════@ ");
-		System.out.println("   ║  ║  HACKERS");
-		System.out.println("   ║  ║  ACADEMIA");
 	}
 
 	protected void showInputError() {
@@ -173,7 +211,7 @@ public class UserModeManagement extends RegiManagement {
 		return regi;
 	}
 
-	// 1. 수강신청
+	// 1. 수강신청 -> 유저 모드에서는 로그인 기록으로 아이디를 찾아와서 수강신청 가능하도록 설정
 
 	protected void registerClass() {
 
@@ -182,12 +220,12 @@ public class UserModeManagement extends RegiManagement {
 		Regi regi = new Regi();
 
 		// 스튜던트테이블에서 아이디로 이름을 찾아와야함
-
 		String id = stu.getMemberId();
 		regi.setStudentName(sDAO.selectId(id).getStudentName());
 
-		System.out.println("강의번호>");
-		regi.setClassNum(Integer.parseInt(sc.nextLine()));
+		System.out.println("강의번호 > ");
+		int number =  menuSelect();
+		regi.setClassNum(number);
 
 		Course course = cDAO.selectOne(regi.getClassNum());
 		if (course == null) {
@@ -229,7 +267,7 @@ public class UserModeManagement extends RegiManagement {
 		check = 1;
 	}
 
-	// 2.회원정보 수정 - 비밀번호, 주소만 수정
+	// 2.회원정보 수정 - 비밀번호, 주소 수정 가능
 
 	protected void updateStudentInfo() {
 
@@ -237,7 +275,7 @@ public class UserModeManagement extends RegiManagement {
 
 		Student stu = sDAO.selectId(stuInfo);
 
-		System.out.print("기존 비밀번호 입력>");
+		System.out.print("기존 비밀번호 입력 > ");
 		String mypage = sc.nextLine();
 
 		if (!mypage.equals(stu.getMemberPassword())) {
@@ -245,29 +283,34 @@ public class UserModeManagement extends RegiManagement {
 			return;
 		}
 
-		System.out.print("비밀번호 변경(변경하지 않을경우 0)>");
+		int num = 0;
 
-		String password = sc.nextLine();
+		System.out.println();
+		System.out.println("1.비밀번호 변경  / 2.주소 변경 ");
+		System.out.print("SELECT MEMU > ");
 
-		if (!password.equals("0")) {
+		num = Integer.parseInt(sc.nextLine());
+
+		if (num == 1) {
+			System.out.print("변경하고자 하는 비밀번호 입력 > ");
+			String password = sc.nextLine();
 			stu.setMemberPassword(password);
-		}
+			sDAO.updateInfo2(stu);
+		} else if (num == 2) {
+			System.out.println();
+			System.out.println("  기존 등록된 주소 확인 후, 수정 내용을 입력해주세요");
+			System.out.println();
 
-		System.out.println("주소지 변경");
-		System.out.println("  기존>" + stu.getStudentAddress());
-		System.out.print("  (변경 않을 경우 0)>");
-
-		String address = sc.nextLine();
-
-		if (!address.equals("0")) {
+			System.out.println("  기존 > " + stu.getStudentAddress());
+			System.out.print("  변경 > ");
+			String address = sc.nextLine();
+			System.out.println();
 			stu.setStudentAddress(address);
+			sDAO.updateInfo2(stu);
 		}
-
-		sDAO.updateInfo2(stu);
-
 	}
 
-	// 3.수강신청 내역 조회
+	// 3.수강신청 내역 조회 -> 수강신청 완료한 사람만 이용 가능하도록 체크
 
 	protected void showRegiInfo1() {
 
@@ -278,17 +321,19 @@ public class UserModeManagement extends RegiManagement {
 		List<Regi> list = rDAO.selectOne(stu.getStudentName());
 
 		if (list.size() == 0) {
+			System.out.println("");
 			System.out.println("등록한 강의가 없습니다.");
+			System.out.println();
+			System.out.println("마감이 빠른 해커스 인기강좌!");
+			System.out.println("등록을 서둘러 주세요!:)");
 			return;
 		} else {
 			for (Regi regi : list) {
 				System.out.println(regi);
 			}
 		}
-
 	}
 
-	// 게시글 확인
 
 	// 공지사항만 보기
 
@@ -298,15 +343,18 @@ public class UserModeManagement extends RegiManagement {
 
 		List<Integer> plist = new ArrayList<>();
 
-		// 게시물 번호를 모으는 리스트를 만들어..
+		// 게시물 번호를 모으는 리스트를 만들어 해당 게시판 내용만 보이게 구분
+		System.out.println();
 		for (Notice notice : list) {
 			System.out.println(notice);
 			plist.add(notice.getNotiNum());
 		}
-
+		System.out.println();
+		int number = 0;
 		System.out.println();
 		System.out.print("게시물번호 > ");
-		int number = (Integer.parseInt(sc.nextLine()));
+		number = menuSelect();
+
 		Notice notice = nDAO.selectOne(number);
 
 		if (notice == null) {
@@ -318,23 +366,32 @@ public class UserModeManagement extends RegiManagement {
 		} else if (!plist.contains(number)) {
 			// 입력받은 값이 리스트 안에 있는지
 			System.out.println("게시글 번호를 다시 확인해주세요.");
-
+			return;
 		} else {
 			System.out.println();
 			System.out.println("제목 : " + notice.getNotiTitle());
 			System.out.println("내용 : " + notice.getNotiContent());
 
 		}
+		
+		//공지글 확인 후, 다음 메뉴가 바로 뜨지 않게 3초 정도 sleep 되도록 설정
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 	}
 
-	// 반별게시판만 보기
+	// 반별게시판만 보기 -> 수강신청 완료한 사람만 이용 가능하도록 체크
 
 	public void checkClassNoti() {
 
 		if (check == 0) {
+			
 			System.out.println("");
 			System.out.println("반별게시판은 수강생만 이용가능합니다.");
+			System.out.println("수강신청 후 이용해주세요♥ ");
 			System.out.println("");
 			return;
 
@@ -344,16 +401,18 @@ public class UserModeManagement extends RegiManagement {
 
 			List<Integer> plist = new ArrayList<>();
 			
+			System.out.println();
 			for (Notice notice : list) {
 				System.out.println(notice);
 				plist.add(notice.getNotiNum());
 			}
 
+			System.out.println();
 			System.out.print("게시물번호 > ");
-			int number = (Integer.parseInt(sc.nextLine()));
+
+			int number = menuSelect();
 			Notice notice = nDAO.selectOne(number);
 
-			System.out.println(notice);
 			if (notice == null) {
 				System.out.println("");
 				System.out.println("게시글 번호를 다시 확인해주세요.");
@@ -362,12 +421,22 @@ public class UserModeManagement extends RegiManagement {
 
 			} else if (!plist.contains(number)) {
 				// 입력받은 값이 리스트 안에 있는지
+				System.out.println("");
 				System.out.println("게시글 번호를 다시 확인해주세요.");
+				System.out.println("");
 
 			} else {
 				System.out.println("제목 : " + notice.getNotiTitle());
 				System.out.println("내용 : " + notice.getNotiContent());
 			}
 		}
+		
+		//공지글 확인 후, 다음 메뉴가 바로 뜨지 않게 3초 정도 sleep 되도록 설정
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
+
 }

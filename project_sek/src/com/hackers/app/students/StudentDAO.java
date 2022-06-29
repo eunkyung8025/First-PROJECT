@@ -27,7 +27,38 @@ public class StudentDAO extends DAO {
 
 	// insert
 
-	public void insert(Student student) {
+	public void insert1(Student student) {
+		try {
+			connect();
+			String sql = "INSERT INTO students VALUES(?,?, 1, ?,?,?,?,?)";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, student.getMemberId());
+			pstmt.setString(2, student.getMemberPassword());
+			pstmt.setString(3, student.getStudentName());
+			pstmt.setString(4, student.getStudentGender());
+			pstmt.setString(5, student.getStudentBirth());
+			pstmt.setString(6, student.getStudentAddress());
+			pstmt.setString(7, student.getStudentPhone());
+
+			int result = pstmt.executeUpdate();
+
+			if (result > 0) {
+				System.out.println();
+				System.out.println("회원가입이 완료되었습니다.");
+				System.out.println();
+				
+			} else {
+				System.out.println("등록되지 않았습니다.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+	}
+	
+	public void insert2(Student student) {
 		try {
 			connect();
 			String sql = "INSERT INTO students VALUES(?,?, 1, ?,?,?,?,?)";
@@ -58,7 +89,7 @@ public class StudentDAO extends DAO {
 		}
 	}
 
-	// update - 주소, 연락처 (management에서 구현?)
+	// update - 주소, 연락처 
 
 	public void updateInfo(Student student) {
 
@@ -215,7 +246,7 @@ public class StudentDAO extends DAO {
 
 		try {
 			connect();
-			String sql = "SELECT * FROM students ORDER BY 2";
+			String sql = "SELECT * FROM students ORDER BY 4";
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql);
 			while (rs.next()) {

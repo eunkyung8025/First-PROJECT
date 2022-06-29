@@ -55,31 +55,31 @@ noti_content VARCHAR2(1000)
 //2.외래키 설정
 
 ALTER TABLE registrations
- ADD CONSTRAINT stu_fk_regi
- FOREIGN KEY (member_id)
- REFERENCES students (member_id);
+ADD CONSTRAINT stu_fk_regi
+FOREIGN KEY (member_id)
+REFERENCES students (member_id);
  
  
 ALTER TABLE registrations
- ADD CONSTRAINT cou_fk_regi
- FOREIGN KEY (class_num)
- REFERENCES courses (class_num);
+ADD CONSTRAINT cou_fk_regi
+FOREIGN KEY (class_num)
+REFERENCES courses (class_num);
 drop table courses purge;
 
 
 
 //3. course 클래스 시퀀스 생성
 CREATE SEQUENCE hac_class_seq
-INCREMENT BY 11                    --10씩 증가..?
-                START WITH 10110          --250에서 9999까지,,?
+INCREMENT BY 11                   
+                START WITH 10110        
                 MAXVALUE 50000
-                NOCACHE                     --NOCACHE는 기본값 20
+                NOCACHE                
                 NOCYCLE;  
                 
                 
 CREATE SEQUENCE hac_notice_seq
 INCREMENT BY 1 
-START WITH 1
+START WITH 101
 MAXVALUE 100
 NOCACHE 
 NOCYCLE;
@@ -104,33 +104,10 @@ select constraint_name, constraint_type, search_condition
 from user_constraints
 where table_name ='REGISTRATIONS';
 
-	System.out.println(" 1등에게 들어야 한 번에 끝낸다! " );
-		System.out.println("     외국어학원 1위 해커스    "  );
-		System.out.println(" @======================@ ");
-		System.out.println("       ||        ||        ");
-		System.out.println("       ||        ||        ");
-		System.out.println("       ||        ||        ");
-		System.out.println("       ||        ||        ");
-		System.out.println("       ||        ||        ");
-		System.out.println("       ||        ||        ");
-		System.out.println("--------------------------");
-		System.out.println("1.수강신청 2.회원정보 수정 ");
-		System.out.println("3.수강신청 내역조회 9.back");
-		System.out.println("--------------------------");
-		
-		System.out.println(" @======@ ");
-		System.out.println("         ⅰ ⅰ     ⅰ ⅰ     HACKERS  ");
-		System.out.println("         ⅰ ⅰ     ⅰ ⅰ     ACADEMIA  ");
-
-		System.out.println(" @======@ ");
-		System.out.println(" @══════@ ");
-		System.out.println("   ║  ║  HACKERS");
-		System.out.println("   ║  ║   ACADEMIA");
-
-update courses set occupied = 7 where class_num=10231; 
-update courses set occupied = 10 where class_num=10242; 
 
 commit;
+
+▼ SQL 디벨로퍼 데이터 추가
 
 insert into students values ('stuid1','stuid1',1,'김민준','남',950415,'대구시 서구',01067814785);                
 insert into students values ('stuid2','stuid2',1,'박서준','남',930315,'대구시 달서구',01061574785);                

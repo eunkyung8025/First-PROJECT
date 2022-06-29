@@ -15,10 +15,10 @@ public class DAO {
 	// Oracle 연결정보
 	
 		//상속이 일어나는 클래스지만 자식 클래스가 이용 못하도록 private으로 막아줌
-	 	private String jdbcDriver;
-	 	private String oracleUrl;
-	 	private String connectedId;
-	 	private String connectedPwd;
+	 	private String jdbcDriver = "oracle.jdbc.driver.OracleDriver";
+	 	private String oracleUrl = "jdbc:oracle:thin:@localhost:1521:xe";
+	 	private String connectedId = "hr";
+	 	private String connectedPwd = "hr";
 
 		// 각 메소드 공통 필드
 		//상속이 일어나기 때문에 필드를 protected로 바꿔줘야함
@@ -28,7 +28,7 @@ public class DAO {
 	 	protected ResultSet rs;
 
 		public void connect() {
-			dbConfig();
+			//dbConfig();
 
 			try {
 				// 1.JDBC Driver 로딩
@@ -42,23 +42,23 @@ public class DAO {
 			}
 		}
 
-		private void dbConfig() {
-			String resource = "config/db.properties";
-			Properties properties = new Properties();
-
-			try {
-				String filePath = ClassLoader.getSystemClassLoader().getResource(resource).getPath();
-				properties.load(new FileInputStream(filePath));
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			jdbcDriver = properties.getProperty("driver");
-			oracleUrl = properties.getProperty("url");
-			connectedId = properties.getProperty("id");
-			connectedPwd = properties.getProperty("password");
-
-		}
-
+//		private void dbConfig() {
+//			String resource = "config/db.properties";
+//			Properties properties = new Properties();
+//
+//			try {
+//				String filePath = ClassLoader.getSystemClassLoader().getResource(resource).getPath();
+//				properties.load(new FileInputStream(filePath));
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			jdbcDriver = properties.getProperty("driver");
+//			oracleUrl = properties.getProperty("url");
+//			connectedId = properties.getProperty("id");
+//			connectedPwd = properties.getProperty("password");
+//
+//		}
+//
 		// 4. 자원해제
 
 		public void disconnect() {
@@ -66,7 +66,7 @@ public class DAO {
 				if (rs != null)
 					rs.close();
 				if (stmt != null)
-					stmt.close();
+				stmt.close();
 				if (pstmt != null)
 					pstmt.close();
 				if (conn != null)
